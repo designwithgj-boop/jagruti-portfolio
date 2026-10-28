@@ -1537,7 +1537,7 @@
       <!-- Global Sticky Navigation Bar -->
       <header class="global-header">
         <a href="index.html" class="brand-mark">
-          <img src="avatar.png" alt="Jagruti Gothwal" class="brand-avatar">
+          <img src="avatar-face.png" alt="Jagruti Gothwal" class="brand-avatar">
           <span class="brand-title">Jagruti Gothwal</span>
         </a>
 
@@ -1556,7 +1556,7 @@
       <header class="hero-section">
         <!-- Hero Avatar -->
         <div class="hero-avatar motion-block" id="block-avatar">
-          <img src="avatar.png" alt="Jagruti Gothwal — Product Designer" width="145" height="145" onerror="this.onerror=null; this.src='https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/60582a62-dbab-4bc1-9169-07db0fcb51b1.jpg';">
+          <img src="avatar-main.jpg" alt="Jagruti Gothwal — Product Designer" width="145" height="145" onerror="this.onerror=null; this.src='avatar.png';">
         </div>
 
         <div class="hero-content">
@@ -1619,7 +1619,99 @@
 
       <!-- Bento Grid -->
       <div class="bento-grid" id="bento-grid">
-        <!-- Row 1 -->
+        <!-- Row 1: Featured Work (Case Studies Scroll-Through) -->
+        <div class="bento-row bento-row-3" id="bento-row-featured">
+          <article class="bento-card motion-block" id="card-featured-work">
+            <div class="featured-card-header">
+              <div class="card-chip" style="position: static;">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                <span>Featured Work</span>
+              </div>
+              <div class="featured-header-actions">
+                <span class="featured-counter" id="featured-scroll-indicator">1 / 3</span>
+                <div class="featured-nav-btns">
+                  <button class="featured-nav-btn" id="feat-scroll-left" aria-label="Previous project">←</button>
+                  <button class="featured-nav-btn" id="feat-scroll-right" aria-label="Next project">→</button>
+                </div>
+                <a href="works.html" class="featured-all-link">All Works (3) →</a>
+              </div>
+            </div>
+
+            <!-- Horizontal Scroll-through Strip -->
+            <div class="featured-scroll-track" id="featured-track">
+              <!-- Project 1: My Time -->
+              <a href="case-study-my-time.html" class="featured-slide-item">
+                <div class="slide-thumb-wrap">
+                  <img src="./case-study-my-time-preview.jpg" alt="My Time Workforce Management SaaS Dashboard">
+                  <div class="slide-tag-pill">Enterprise SaaS</div>
+                </div>
+                <div class="slide-info-panel">
+                  <div>
+                    <div class="slide-meta-row">
+                      <span class="slide-client">Delta Infosoft</span>
+                      <span class="slide-dot">•</span>
+                      <span class="slide-year">2023 – 2024</span>
+                    </div>
+                    <h3 class="slide-title">My Time — Workforce Management SaaS</h3>
+                    <p class="slide-desc">Web dashboard redesign simplifying multi-tier scheduling and attendance reconciliation with a unified design system.</p>
+                  </div>
+                  <div class="slide-action-row">
+                    <span>Read Case Study</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Project 2: Attendance App -->
+              <a href="case-study-attendance-app.html" class="featured-slide-item">
+                <div class="slide-thumb-wrap">
+                  <img src="./case-study-attendance-preview.jpg" alt="Attendance Mobile App with GPS Geofencing">
+                  <div class="slide-tag-pill" style="background: rgba(0, 87, 255, 0.85);">Mobile App</div>
+                </div>
+                <div class="slide-info-panel">
+                  <div>
+                    <div class="slide-meta-row">
+                      <span class="slide-client">Delta Infosoft</span>
+                      <span class="slide-dot">•</span>
+                      <span class="slide-year">2023</span>
+                    </div>
+                    <h3 class="slide-title">Attendance App — Mobile Workforce Tracking</h3>
+                    <p class="slide-desc">Intuitive mobile check-in app with live GPS geofence validation, zero-training onboarding, and offline sync.</p>
+                  </div>
+                  <div class="slide-action-row">
+                    <span>Read Case Study</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Project 3: Pick & Pack -->
+              <a href="case-study-pick-and-pack.html" class="featured-slide-item">
+                <div class="slide-thumb-wrap">
+                  <img src="./case-study-pick-pack-preview.jpg" alt="Pick and Pack Warehouse Logistics Operations">
+                  <div class="slide-tag-pill" style="background: rgba(238, 106, 31, 0.85);">Logistics &amp; Ops</div>
+                </div>
+                <div class="slide-info-panel">
+                  <div>
+                    <div class="slide-meta-row">
+                      <span class="slide-client">Delta Infosoft</span>
+                      <span class="slide-dot">•</span>
+                      <span class="slide-year">2024</span>
+                    </div>
+                    <h3 class="slide-title">Pick &amp; Pack — Warehouse Logistics Operations</h3>
+                    <p class="slide-desc">Dual interface for handheld warehouse barcode scanners and supervisor dispatch console reducing mispicks by 99.4%.</p>
+                  </div>
+                  <div class="slide-action-row">
+                    <span>Read Case Study</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Row 2: Experience, Listening, Reading -->
         <div class="bento-row bento-row-1">
           <!-- Card 1: Experience -->
           <article class="bento-card motion-block" id="card-experience">
@@ -1876,98 +1968,6 @@
                 <h3 class="how-step-title">04 Visual QA &amp; Handoff</h3>
                 <p class="how-step-body">I partner closely with frontend engineers to ensure pixel-perfect responsive implementation and conduct rigorous usability reviews.</p>
               </div>
-            </div>
-          </article>
-        </div>
-
-        <!-- Row 3: Featured Work (Case Studies Scroll-Through) -->
-        <div class="bento-row bento-row-3">
-          <article class="bento-card motion-block" id="card-featured-work">
-            <div class="featured-card-header">
-              <div class="card-chip" style="position: static;">
-                <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                <span>Featured Work</span>
-              </div>
-              <div class="featured-header-actions">
-                <span class="featured-counter" id="featured-scroll-indicator">1 / 3</span>
-                <div class="featured-nav-btns">
-                  <button class="featured-nav-btn" id="feat-scroll-left" aria-label="Previous project">←</button>
-                  <button class="featured-nav-btn" id="feat-scroll-right" aria-label="Next project">→</button>
-                </div>
-                <a href="works.html" class="featured-all-link">All Works (3) →</a>
-              </div>
-            </div>
-
-            <!-- Horizontal Scroll-through Strip -->
-            <div class="featured-scroll-track" id="featured-track">
-              <!-- Project 1: My Time -->
-              <a href="case-study-my-time.html" class="featured-slide-item">
-                <div class="slide-thumb-wrap">
-                  <img src="./case-study-my-time-preview.jpg" alt="My Time Workforce Management SaaS Dashboard">
-                  <div class="slide-tag-pill">Enterprise SaaS</div>
-                </div>
-                <div class="slide-info-panel">
-                  <div>
-                    <div class="slide-meta-row">
-                      <span class="slide-client">Delta Infosoft</span>
-                      <span class="slide-dot">•</span>
-                      <span class="slide-year">2023 – 2024</span>
-                    </div>
-                    <h3 class="slide-title">My Time — Workforce Management SaaS</h3>
-                    <p class="slide-desc">Web dashboard redesign simplifying multi-tier scheduling and attendance reconciliation with a unified design system.</p>
-                  </div>
-                  <div class="slide-action-row">
-                    <span>Read Case Study</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </div>
-                </div>
-              </a>
-
-              <!-- Project 2: Attendance App -->
-              <a href="case-study-attendance-app.html" class="featured-slide-item">
-                <div class="slide-thumb-wrap">
-                  <img src="./case-study-attendance-preview.jpg" alt="Attendance Mobile App with GPS Geofencing">
-                  <div class="slide-tag-pill" style="background: rgba(0, 87, 255, 0.85);">Mobile App</div>
-                </div>
-                <div class="slide-info-panel">
-                  <div>
-                    <div class="slide-meta-row">
-                      <span class="slide-client">Delta Infosoft</span>
-                      <span class="slide-dot">•</span>
-                      <span class="slide-year">2023</span>
-                    </div>
-                    <h3 class="slide-title">Attendance App — Mobile Workforce Tracking</h3>
-                    <p class="slide-desc">Intuitive mobile check-in app with live GPS geofence validation, zero-training onboarding, and offline sync.</p>
-                  </div>
-                  <div class="slide-action-row">
-                    <span>Read Case Study</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </div>
-                </div>
-              </a>
-
-              <!-- Project 3: Pick & Pack -->
-              <a href="case-study-pick-and-pack.html" class="featured-slide-item">
-                <div class="slide-thumb-wrap">
-                  <img src="./case-study-pick-pack-preview.jpg" alt="Pick and Pack Warehouse Logistics Operations">
-                  <div class="slide-tag-pill" style="background: rgba(238, 106, 31, 0.85);">Logistics &amp; Ops</div>
-                </div>
-                <div class="slide-info-panel">
-                  <div>
-                    <div class="slide-meta-row">
-                      <span class="slide-client">Delta Infosoft</span>
-                      <span class="slide-dot">•</span>
-                      <span class="slide-year">2024</span>
-                    </div>
-                    <h3 class="slide-title">Pick &amp; Pack — Warehouse Logistics Operations</h3>
-                    <p class="slide-desc">Dual interface for handheld warehouse barcode scanners and supervisor dispatch console reducing mispicks by 99.4%.</p>
-                  </div>
-                  <div class="slide-action-row">
-                    <span>Read Case Study</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </div>
-                </div>
-              </a>
             </div>
           </article>
         </div>
