@@ -76,8 +76,8 @@
     /* Hidden clock driver for single Web Animation clock */
     #clock-driver {
       position: absolute;
-      width: 0;
-      height: 0;
+      width: 1px;
+      height: 1px;
       opacity: 0;
       pointer-events: none;
       visibility: hidden;
@@ -187,7 +187,7 @@
       background-color: #D6D2CC;
       border-radius: 1px;
       transform-origin: bottom center;
-      transition: background-color 0.1s linear;
+      transition: background-color 0.12s linear;
     }
 
     .waveform-bar.active {
@@ -463,7 +463,7 @@
 
     .progress-bar-fill {
       height: 100%;
-      width: 17.7%; /* 34s / 192s initial */
+      width: 17.7%; /* initial 34s */
       background: var(--color-dark);
       border-radius: 2px;
       will-change: width;
@@ -630,12 +630,7 @@
       background: var(--color-orange);
       opacity: 0.4;
       pointer-events: none;
-      animation: pinPulse 2s ease-out infinite;
-    }
-
-    @keyframes pinPulse {
-      0% { transform: scale(1); opacity: 0.6; }
-      100% { transform: scale(3); opacity: 0; }
+      transform-origin: center center;
     }
 
     .map-pill-label {
@@ -750,6 +745,7 @@
       z-index: 1;
       transform: translateX(0);
       will-change: transform;
+      transition: transform 0.42s var(--ease-step);
     }
 
     .step-btn {
@@ -979,6 +975,12 @@
         opacity: 1 !important;
         transform: none !important;
       }
+      .sliding-pill {
+        transition: none !important;
+      }
+      .how-step-pane {
+        transition: none !important;
+      }
     }
   </style>
 </head>
@@ -1195,7 +1197,7 @@
               <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4f3be2d6-3848-493b-b3d7-5880dac21a63.jpg" alt="Street map of Lisbon">
               <div class="map-lisbon-center">Lisbon</div>
               <div class="map-pin-pulse">
-                <div class="map-pin-halo"></div>
+                <div class="map-pin-halo" id="map-pin-halo"></div>
               </div>
             </div>
             <div class="map-pill-label">
@@ -1258,37 +1260,331 @@
   </div>
 
   <script>
-    // Build 78 waveform bars with seeded heights and two loud bursts
+    /* ==========================================================================
+       1. INITIALIZE WAVEFORM BARS
+       ========================================================================== */
+    const waveformContainer = document.getElementById('voice-waveform');
+    const NUM_BARS = 78;
+    const waveformBars = [];
+
     (function initWaveform() {
-      const container = document.getElementById('voice-waveform');
-      const numBars = 78;
-      
-      // Seeded random pseudo-generator
       let seed = 42;
-      function random() {
+      function pseudoRandom() {
         seed = (seed * 9301 + 49297) % 233280;
         return seed / 233280;
       }
 
-      for (let i = 0; i < numBars; i++) {
+      for (let i = 0; i < NUM_BARS; i++) {
         const bar = document.createElement('div');
         bar.className = 'waveform-bar';
-        
-        // Two loud bursts around index 23-27 and index 54-58
-        let height = 4 + random() * 10;
+
+        // Base height with two distinct bursts near bar 25 and bar 55
+        let h = 5 + pseudoRandom() * 9;
         const d1 = Math.abs(i - 25);
         const d2 = Math.abs(i - 55);
-        if (d1 < 6) {
-          height += (6 - d1) * 2.8 + random() * 4;
-        } else if (d2 < 6) {
-          height += (6 - d2) * 2.6 + random() * 4;
+        if (d1 < 7) {
+          h += (7 - d1) * 2.6 + pseudoRandom() * 3.5;
+        } else if (d2 < 7) {
+          h += (7 - d2) * 2.4 + pseudoRandom() * 3.5;
         }
-        height = Math.min(26, Math.max(5, height));
-        bar.style.height = `${height.toFixed(1)}px`;
-        bar.dataset.baseHeight = height.toFixed(1);
-        container.appendChild(bar);
+        h = Math.min(26, Math.max(5, h));
+        bar.style.height = `${h.toFixed(1)}px`;
+        bar.dataset.baseH = h.toFixed(1);
+
+        waveformContainer.appendChild(bar);
+        waveformBars.push(bar);
       }
     })();
+
+    /* ==========================================================================
+       2. UNIFIED WEB ANIMATION CLOCK ENGINE
+       ========================================================================== */
+    const clockDriver = document.getElementById('clock-driver');
+    const clockAnim = clockDriver.animate(
+      [{ opacity: 0 }, { opacity: 1 }],
+      { duration: 3600000, iterations: Infinity }
+    );
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* DOM Motion Targets */
+    const motionBlocks = Array.from(document.querySelectorAll('.motion-block'));
+    const availableHalo = document.getElementById('available-halo');
+    const mapPinHalo = document.getElementById('map-pin-halo');
+    const timelineStream = document.getElementById('timeline-stream');
+    const timelineList1 = document.getElementById('timeline-list-1');
+
+    /* Voice Note State */
+    const VOICE_AUTO_START = 1.3;
+    const VOICE_TOTAL_DUR = 32.0;
+    const voicePlayToggle = document.getElementById('voice-play-toggle');
+    const voicePlayIcon = document.getElementById('voice-play-icon');
+    const voicePauseIcon = document.getElementById('voice-pause-icon');
+    const voiceTimer = document.getElementById('voice-timer');
+
+    let voiceManualOverride = false;
+    let voiceIsPlaying = false;
+    let voiceManualTime = 0;
+    let voiceLastClock = 0;
+
+    voicePlayToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      voiceManualOverride = true;
+      voiceIsPlaying = !voiceIsPlaying;
+      if (voiceIsPlaying && voiceManualTime >= VOICE_TOTAL_DUR) {
+        voiceManualTime = 0;
+      }
+    });
+
+    /* Music Player State */
+    const MUSIC_TOTAL_DUR = 192.0; // 3:12
+    const MUSIC_START_OFFSET = 34.0; // starts at 00:34
+    const musicProgressFill = document.getElementById('music-progress-fill');
+    const musicCurrentTimeEl = document.getElementById('music-current-time');
+    const musicPlayToggle = document.getElementById('music-play-toggle');
+    const musicPlayIcon = document.getElementById('music-play-icon');
+    const musicPauseIcon = document.getElementById('music-pause-icon');
+    const musicPrevBtn = document.getElementById('music-prev-btn');
+    const musicNextBtn = document.getElementById('music-next-btn');
+
+    let musicIsPlaying = true;
+    let musicOffset = MUSIC_START_OFFSET;
+    let musicLastClock = 0;
+
+    musicPlayToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      musicIsPlaying = !musicIsPlaying;
+      musicPlayIcon.style.display = musicIsPlaying ? 'none' : 'block';
+      musicPauseIcon.style.display = musicIsPlaying ? 'block' : 'none';
+    });
+
+    musicPrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      musicOffset = 0;
+    });
+
+    musicNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      musicOffset = Math.min(MUSIC_TOTAL_DUR - 1, musicOffset + 15);
+    });
+
+    /* How I Work Segment Control State */
+    const stepBtns = Array.from(document.querySelectorAll('.step-btn'));
+    const stepPanes = Array.from(document.querySelectorAll('.how-step-pane'));
+    const slidingPill = document.getElementById('step-sliding-pill');
+    const STEP_DURATION = 1.9; // 1.9s per step
+    const STEP_HOLD_DURATION = 6.0; // 6s hold on user click
+
+    let activeStepIndex = 0;
+    let outgoingStepIndex = -1;
+    let userHoldActiveUntil = -1;
+
+    function setStep(newIndex, isUserAction = false, currentTime = 0) {
+      if (newIndex === activeStepIndex && !isUserAction) return;
+      if (newIndex < 0 || newIndex >= stepBtns.length) return;
+
+      if (isUserAction) {
+        userHoldActiveUntil = currentTime + STEP_HOLD_DURATION;
+      }
+
+      outgoingStepIndex = activeStepIndex;
+      activeStepIndex = newIndex;
+
+      // Update sliding pill
+      slidingPill.style.transform = `translateX(${activeStepIndex * 100}%)`;
+
+      // Update button highlights
+      stepBtns.forEach((btn, idx) => {
+        const isCur = idx === activeStepIndex;
+        btn.classList.toggle('active', isCur);
+        btn.setAttribute('aria-selected', isCur ? 'true' : 'false');
+      });
+
+      // Update content panes with rise out / rise in
+      stepPanes.forEach((pane, idx) => {
+        if (idx === activeStepIndex) {
+          pane.classList.remove('outgoing');
+          pane.classList.add('active');
+        } else if (idx === outgoingStepIndex) {
+          pane.classList.remove('active');
+          pane.classList.add('outgoing');
+        } else {
+          pane.classList.remove('active', 'outgoing');
+        }
+      });
+    }
+
+    stepBtns.forEach((btn, idx) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const currentClock = ((clockAnim.currentTime || 0) / 1000);
+        setStep(idx, true, currentClock);
+      });
+    });
+
+    /* ==========================================================================
+       3. ANIMATION FRAME TICK (Synchronized to Clock)
+       ========================================================================== */
+    let entranceComplete = false;
+
+    function tick() {
+      // Single Clock: currentTime in seconds
+      const clockTime = (clockAnim.currentTime || 0) / 1000;
+      const delta = Math.max(0, clockTime - (voiceLastClock || clockTime));
+      voiceLastClock = clockTime;
+
+      /* A. Entrance Stagger Animation */
+      if (!prefersReducedMotion && !entranceComplete) {
+        let allSettled = true;
+        const STAGGER = 0.08;
+        const ENTRANCE_DUR = 0.7;
+
+        for (let i = 0; i < motionBlocks.length; i++) {
+          const block = motionBlocks[i];
+          const delay = i * STAGGER;
+          if (clockTime < delay) {
+            block.style.opacity = '0';
+            block.style.transform = 'translateY(14px)';
+            allSettled = false;
+          } else if (clockTime >= delay + ENTRANCE_DUR) {
+            block.style.opacity = '1';
+            block.style.transform = 'translateY(0)';
+          } else {
+            const u = (clockTime - delay) / ENTRANCE_DUR;
+            // Cubic ease out (1 - (1-u)^3)
+            const eased = 1 - Math.pow(1 - u, 3);
+            block.style.opacity = eased.toFixed(3);
+            block.style.transform = `translateY(${((1 - eased) * 14).toFixed(2)}px)`;
+            allSettled = false;
+          }
+        }
+        if (allSettled && clockTime > motionBlocks.length * STAGGER + ENTRANCE_DUR) {
+          entranceComplete = true;
+        }
+      } else if (prefersReducedMotion) {
+        motionBlocks.forEach(b => {
+          b.style.opacity = '1';
+          b.style.transform = 'translateY(0)';
+        });
+      }
+
+      /* B. Available Dot Halo Pulse (every 1.8s, scale 1 to 2.4, fade out) */
+      if (!prefersReducedMotion && availableHalo) {
+        const haloPhase = (clockTime % 1.8) / 1.8;
+        const haloScale = 1 + haloPhase * 1.4;
+        const haloOpacity = 0.65 * (1 - haloPhase);
+        availableHalo.style.transform = `scale(${haloScale.toFixed(3)})`;
+        availableHalo.style.opacity = haloOpacity.toFixed(3);
+      }
+
+      /* C. Map Pin Halo Pulse (subtle quiet motion) */
+      if (!prefersReducedMotion && mapPinHalo) {
+        const pinPhase = (clockTime % 2.0) / 2.0;
+        const pinScale = 1 + pinPhase * 2.2;
+        const pinOpacity = 0.5 * (1 - pinPhase);
+        mapPinHalo.style.transform = `scale(${pinScale.toFixed(3)})`;
+        mapPinHalo.style.opacity = pinOpacity.toFixed(3);
+      }
+
+      /* D. Experience Timeline Seamless Drift (9px/s) */
+      if (!prefersReducedMotion && timelineStream && timelineList1) {
+        const listHeight = timelineList1.offsetHeight || 340;
+        const yOffset = -(clockTime * 9) % listHeight;
+        timelineStream.style.transform = `translate3d(0, ${yOffset.toFixed(2)}px, 0)`;
+      }
+
+      /* E. Voice Note Playback */
+      let currentVoiceElapsed = 0;
+      if (!voiceManualOverride) {
+        // Default clock-bound auto playback: starts at 1.3s and plays for 32s
+        if (clockTime >= VOICE_AUTO_START && clockTime < (VOICE_AUTO_START + VOICE_TOTAL_DUR)) {
+          voiceIsPlaying = true;
+          currentVoiceElapsed = clockTime - VOICE_AUTO_START;
+        } else if (clockTime >= (VOICE_AUTO_START + VOICE_TOTAL_DUR)) {
+          voiceIsPlaying = false;
+          currentVoiceElapsed = VOICE_TOTAL_DUR;
+        } else {
+          voiceIsPlaying = false;
+          currentVoiceElapsed = 0;
+        }
+      } else {
+        // User manually toggled playback
+        if (voiceIsPlaying) {
+          voiceManualTime += delta;
+          if (voiceManualTime >= VOICE_TOTAL_DUR) {
+            voiceManualTime = VOICE_TOTAL_DUR;
+            voiceIsPlaying = false;
+          }
+        }
+        currentVoiceElapsed = voiceManualTime;
+      }
+
+      // Update voice play/pause icons
+      if (voiceIsPlaying) {
+        voicePlayIcon.style.display = 'none';
+        voicePauseIcon.style.display = 'block';
+      } else {
+        voicePlayIcon.style.display = 'block';
+        voicePauseIcon.style.display = 'none';
+      }
+
+      // Update voice timer (0:00 -> 0:32)
+      const secFloor = Math.floor(Math.min(VOICE_TOTAL_DUR, Math.max(0, currentVoiceElapsed)));
+      const vMin = Math.floor(secFloor / 60);
+      const vSec = secFloor % 60;
+      voiceTimer.textContent = `${vMin}:${vSec < 10 ? '0' : ''}${vSec}`;
+
+      // Update waveform bars
+      const playheadProgress = Math.min(1, Math.max(0, currentVoiceElapsed / VOICE_TOTAL_DUR));
+      const activeBarIdx = Math.floor(playheadProgress * NUM_BARS);
+
+      for (let i = 0; i < NUM_BARS; i++) {
+        const bar = waveformBars[i];
+        if (i < activeBarIdx) {
+          bar.classList.add('active');
+        } else {
+          bar.classList.remove('active');
+        }
+
+        // Quiet UI motion: bars near playhead bounce (scaleY up to +55%)
+        if (voiceIsPlaying && Math.abs(i - activeBarIdx) <= 4) {
+          const dist = Math.abs(i - activeBarIdx);
+          const bounceFactor = Math.sin((clockTime * 14) + (i * 0.9));
+          const scaleBonus = Math.max(0, bounceFactor) * (1 - dist / 5) * 0.55;
+          bar.style.transform = `scaleY(${(1 + scaleBonus).toFixed(2)})`;
+        } else {
+          bar.style.transform = 'scaleY(1)';
+        }
+      }
+
+      /* F. Music Player Progress & Clock */
+      if (musicIsPlaying) {
+        musicOffset += delta;
+        if (musicOffset >= MUSIC_TOTAL_DUR) {
+          musicOffset = 0;
+        }
+      }
+      const musicPct = (musicOffset / MUSIC_TOTAL_DUR) * 100;
+      musicProgressFill.style.width = `${musicPct.toFixed(2)}%`;
+
+      const mTotalSec = Math.floor(musicOffset);
+      const mMin = Math.floor(mTotalSec / 60);
+      const mSec = mTotalSec % 60;
+      musicCurrentTimeEl.textContent = `0${mMin}:${mSec < 10 ? '0' : ''}${mSec}`;
+
+      /* G. How I Work Auto-Advance (every 1.9s with 0.42s ease, hold 6s on click) */
+      if (clockTime >= userHoldActiveUntil) {
+        const autoStep = Math.floor(clockTime / STEP_DURATION) % 4;
+        if (autoStep !== activeStepIndex) {
+          setStep(autoStep, false, clockTime);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    // Start single unified clock loop
+    requestAnimationFrame(tick);
   </script>
 </body>
 </html>
