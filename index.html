@@ -852,6 +852,21 @@
       display: block;
     }
 
+    .creative-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(0.98);
+    }
+
+    .creative-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
     .photo-caption-pill {
       position: absolute;
       bottom: 16px;
@@ -874,23 +889,41 @@
       max-width: calc(100% - 32px);
     }
 
-    .football-icon {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--color-orange);
-      display: inline-flex;
+    .slide-dots-wrap {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      gap: 6px;
+      z-index: 12;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
-    .football-icon svg {
-      width: 10px;
-      height: 10px;
-      stroke: #FFFFFF;
-      fill: none;
-      stroke-width: 1.6;
+    .slide-dot-btn {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s, width 0.25s;
+    }
+
+    .slide-dot-btn:hover {
+      background: rgba(255, 255, 255, 0.85);
+      transform: scale(1.15);
+    }
+
+    .slide-dot-btn.active {
+      background: #FFFFFF;
+      width: 15px;
+      border-radius: 4px;
     }
 
     /* ---------------- CARD 6: HOW I WORK ---------------- */
@@ -1517,20 +1550,49 @@
             </div>
           </article>
 
-          <!-- Card 5: Photo (Comic & Satirical Short Videos) -->
-          <article class="bento-card motion-block" id="card-photo">
-            <div class="photo-frame">
-              <img src="./comic-video-creator.jpg" alt="Creating comic and satirical short videos on smartphone" style="object-position: center 35%;">
+          <!-- Card 5: Creative Passions (Graphic Artwork & Comic Videos) -->
+          <article class="bento-card motion-block" id="card-photo" style="cursor: pointer;" title="Click to switch between Graphic Artwork and Video Shorts">
+            <!-- Slide A: Graphic Artwork (Default) -->
+            <div class="creative-slide active" id="slide-artwork">
+              <div class="photo-frame">
+                <img src="./graphic-artwork.jpg" alt="Minimalist Bauhaus geometric graphic artwork poster" style="object-position: center top;">
+              </div>
+              <div class="card-chip" style="position: absolute; top: 18px; left: 18px; z-index: 10; background: rgba(0,0,0,0.65); color: #FFFFFF; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.18);">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-orange); display: inline-block;"></span>
+                <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.05em; color: #FFFFFF;">ARTWORK</span>
+              </div>
+              <div class="photo-caption-pill">
+                <span class="art-pill-icon" style="width: 15px; height: 15px; border-radius: 50%; background: var(--color-orange); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3" fill="#FFF"/>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>
+                  </svg>
+                </span>
+                <span>I love making graphic artwork</span>
+              </div>
             </div>
-            <div class="card-chip" style="position: absolute; top: 18px; left: 18px; z-index: 10; background: rgba(0,0,0,0.65); color: #FFFFFF; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.18);">
-              <span style="width: 7px; height: 7px; border-radius: 50%; background: #FF3B30; display: inline-block;"></span>
-              <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.05em; color: #FFFFFF;">REC</span>
+
+            <!-- Slide B: Comic & Satirical Videos -->
+            <div class="creative-slide" id="slide-video">
+              <div class="photo-frame">
+                <img src="./comic-video-creator.jpg" alt="Creating comic and satirical short videos on smartphone" style="object-position: center 35%;">
+              </div>
+              <div class="card-chip" style="position: absolute; top: 18px; left: 18px; z-index: 10; background: rgba(0,0,0,0.65); color: #FFFFFF; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.18);">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #FF3B30; display: inline-block;"></span>
+                <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.05em; color: #FFFFFF;">REC</span>
+              </div>
+              <div class="photo-caption-pill">
+                <span class="video-pill-icon" style="width: 15px; height: 15px; border-radius: 50%; background: #FF3B30; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg viewBox="0 0 24 24" width="8" height="8" fill="#FFFFFF"><polygon points="6 4 19 12 6 20 6 4"></polygon></svg>
+                </span>
+                <span>Comic &amp; satirical short videos</span>
+              </div>
             </div>
-            <div class="photo-caption-pill">
-              <span class="video-pill-icon" style="width: 15px; height: 15px; border-radius: 50%; background: #FF3B30; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <svg viewBox="0 0 24 24" width="8" height="8" fill="#FFFFFF"><polygon points="6 4 19 12 6 20 6 4"></polygon></svg>
-              </span>
-              <span>Comic &amp; satirical short videos</span>
+
+            <!-- Interactive Slide Switcher Dots -->
+            <div class="slide-dots-wrap" id="creative-slide-dots">
+              <button class="slide-dot-btn active" id="dot-artwork" aria-label="Show Graphic Artwork" title="Graphic Artwork"></button>
+              <button class="slide-dot-btn" id="dot-video" aria-label="Show Comic Videos" title="Comic Videos"></button>
             </div>
           </article>
 
@@ -1750,6 +1812,52 @@
       });
     }
 
+    /* Creative Passions Slide Switcher (Graphic Artwork & Comic Videos) */
+    const slideArtwork = document.getElementById('slide-artwork');
+    const slideVideo = document.getElementById('slide-video');
+    const dotArtwork = document.getElementById('dot-artwork');
+    const dotVideo = document.getElementById('dot-video');
+    const cardPhoto = document.getElementById('card-photo');
+
+    let currentCreativeSlide = 0; // 0 = artwork, 1 = video
+    let creativeHoldUntil = -1;
+    const CREATIVE_CYCLE_INTERVAL = 5.0; // cycle every 5s
+
+    function setCreativeSlide(idx, isUser = false, now = 0) {
+      currentCreativeSlide = idx;
+      if (isUser) {
+        creativeHoldUntil = (now || performance.now() / 1000) + 8.0;
+      }
+      if (slideArtwork && slideVideo) {
+        slideArtwork.classList.toggle('active', idx === 0);
+        slideVideo.classList.toggle('active', idx === 1);
+      }
+      if (dotArtwork && dotVideo) {
+        dotArtwork.classList.toggle('active', idx === 0);
+        dotVideo.classList.toggle('active', idx === 1);
+      }
+    }
+
+    if (dotArtwork) {
+      dotArtwork.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setCreativeSlide(0, true);
+      });
+    }
+
+    if (dotVideo) {
+      dotVideo.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setCreativeSlide(1, true);
+      });
+    }
+
+    if (cardPhoto) {
+      cardPhoto.addEventListener('click', () => {
+        setCreativeSlide(currentCreativeSlide === 0 ? 1 : 0, true);
+      });
+    }
+
     /* How I Work Segment Control State */
     const stepBtns = Array.from(document.querySelectorAll('.step-btn'));
     const stepPanes = Array.from(document.querySelectorAll('.how-step-pane'));
@@ -1938,6 +2046,14 @@
         const autoStep = Math.floor(clockTime / STEP_DURATION) % 4;
         if (autoStep !== activeStepIndex) {
           setStep(autoStep, false, clockTime);
+        }
+      }
+
+      /* H. Creative Passions Auto-Advance (every 5s, hold 8s on user click) */
+      if (clockTime >= creativeHoldUntil) {
+        const autoCreative = Math.floor(clockTime / CREATIVE_CYCLE_INTERVAL) % 2;
+        if (autoCreative !== currentCreativeSlide) {
+          setCreativeSlide(autoCreative, false, clockTime);
         }
       }
 
