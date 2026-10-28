@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume — Jagruti Gothwal (Product Designer)</title>
+  <meta name="description" content="Resume and career profile of Jagruti Gothwal, Product Designer specializing in SaaS mobile and web applications.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #EEECE8;
+      --bg-card: #F5F3EF;
+      --bg-card-subtle: #FAF9F6;
+      --border-hairline: rgba(0, 0, 0, 0.07);
+      --border-hover: rgba(0, 0, 0, 0.14);
+      --color-ink: #1E1C1A;
+      --color-secondary: #77736E;
+      --color-muted: #A7A39D;
+      --color-chips: #E9E6E1;
+      --color-orange: #EE6A1F;
+      --color-green: #3BC45E;
+      --color-dark: #2A2624;
+
+      --radius-card: 16px;
+      --radius-pill: 9999px;
+      --radius-chip: 9999px;
+
+      --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.02), 0 4px 16px rgba(0, 0, 0, 0.03);
+      --shadow-card-hover: 0 4px 8px rgba(0, 0, 0, 0.03), 0 12px 28px rgba(0, 0, 0, 0.06);
+      --ease-cubic: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background-color: var(--bg-page);
+      font-family: var(--font-inter);
+      color: var(--color-ink);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .site-container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px clamp(16px, 3.5vw, 48px) 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    /* Global Header / Nav */
+    .global-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--color-ink);
+      background: rgba(245, 243, 239, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 6px 14px 6px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s var(--ease-cubic), box-shadow 0.2s;
+    }
+
+    .brand-mark:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .brand-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-title {
+      font-size: 14.5px;
+      font-weight: 560;
+      letter-spacing: -0.015em;
+    }
+
+    .brand-role {
+      font-size: 12.5px;
+      color: var(--color-secondary);
+      font-weight: 420;
+    }
+
+    .nav-pill-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 243, 239, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 5px 6px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 15px;
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 480;
+      letter-spacing: -0.01em;
+      color: var(--color-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--color-ink);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-link.active {
+      background: var(--color-dark);
+      color: #FFFFFF;
+      font-weight: 520;
+    }
+
+    /* Page Hero Banner */
+    .resume-hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .hero-text {
+      max-width: 680px;
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-chip);
+      background: var(--color-chips);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--color-ink);
+      margin-bottom: 12px;
+    }
+
+    .badge-chip svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .resume-title {
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .resume-lead {
+      font-size: clamp(16px, 1.4vw, 18px);
+      line-height: 1.5;
+      color: var(--color-secondary);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-orange);
+      color: #FFFFFF;
+      font-size: 14.5px;
+      font-weight: 520;
+      letter-spacing: -0.01em;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(238, 106, 31, 0.25);
+      transition: transform 0.2s var(--ease-cubic), box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(238, 106, 31, 0.35);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      color: var(--color-ink);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 18px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    /* Resume Content Grid */
+    .resume-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* Left Column: Parsed Dossier */
+    .dossier-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .dossier-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .dossier-card:hover {
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .card-heading {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--color-ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-heading svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--color-orange);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* Experience Details */
+    .exp-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .exp-role-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .exp-role {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    .exp-period {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-secondary);
+      background: var(--color-chips);
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .exp-company {
+      font-size: 14px;
+      color: var(--color-orange);
+      font-weight: 520;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 4px;
+    }
+
+    .bullet-list li {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--color-secondary);
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .bullet-list li::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-ink);
+      opacity: 0.35;
+    }
+
+    /* Projects Spotlight */
+    .proj-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      border: 1px solid var(--border-hairline);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s var(--ease-cubic);
+    }
+
+    .proj-block:hover {
+      background: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border-color: var(--border-hover);
+    }
+
+    .proj-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .proj-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    .proj-arrow {
+      color: var(--color-orange);
+      font-size: 14px;
+      font-weight: 600;
+      transition: transform 0.2s;
+    }
+
+    .proj-block:hover .proj-arrow {
+      transform: translateX(3px);
+    }
+
+    .proj-desc {
+      font-size: 13.5px;
+      color: var(--color-secondary);
+      line-height: 1.45;
+    }
+
+    /* Skills Pill Grid */
+    .skills-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .skill-cat-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-secondary);
+    }
+
+    .pill-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      font-size: 13px;
+      font-weight: 480;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: #FFFFFF;
+      border: 1px solid var(--border-hairline);
+      color: var(--color-ink);
+    }
+
+    .skill-pill.featured {
+      background: #FDF4ED;
+      border-color: rgba(238, 106, 31, 0.25);
+      color: var(--color-orange);
+      font-weight: 520;
+    }
+
+    /* Right Column: PDF Preview Stage */
+    .pdf-column {
+      position: sticky;
+      top: 88px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pdf-viewer-frame {
+      width: 100%;
+      height: 820px;
+      background: #FFFFFF;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-hairline);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .viewer-header {
+      padding: 12px 18px;
+      background: #FAF8F5;
+      border-bottom: 1px solid var(--border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .viewer-filename {
+      font-size: 13px;
+      font-weight: 520;
+      color: var(--color-ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .viewer-filename svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-orange);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .pdf-embed-object {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 980px) {
+      .resume-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .pdf-column {
+        position: static;
+      }
+
+      .pdf-viewer-frame {
+        height: 600px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site-container {
+        padding: 16px 14px 60px;
+        gap: 24px;
+      }
+
+      .global-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .nav-pill-group {
+        justify-content: center;
+        overflow-x: auto;
+      }
+
+      .resume-title {
+        font-size: 28px;
+      }
+
+      .hero-actions {
+        width: 100%;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .pdf-viewer-frame {
+        height: 480px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-container">
+    <!-- Global Sticky Navigation Header -->
+    <header class="global-header">
+      <a href="index.html" class="brand-mark" title="Back to Profile Overview">
+        <img src="avatar.png" alt="Jagruti Gothwal" class="brand-avatar">
+        <div>
+          <div class="brand-title">Jagruti Gothwal</div>
+          <div class="brand-role">Product Designer</div>
+        </div>
+      </a>
+
+      <nav class="nav-pill-group" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Overview</a>
+        <a href="works.html" class="nav-link">Works</a>
+        <a href="resume.html" class="nav-link active" aria-current="page">Resume</a>
+        <a href="mailto:gothwaljagruti@gmail.com" class="nav-link">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Page Hero Banner -->
+    <section class="resume-hero">
+      <div class="hero-text">
+        <div class="badge-chip">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Curriculum Vitae</span>
+        </div>
+        <h1 class="resume-title">Resume &amp; Background</h1>
+        <p class="resume-lead">
+          Product Designer with 3+ years of experience designing SaaS mobile and web applications. Specializing in turning complex business workflows into intuitive, scalable human experiences.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+        <a href="resume.pdf" download="Jagruti_Gothwal_Resume.pdf" class="btn-primary" id="btn-download-pdf">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download PDF</span>
+        </a>
+        <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span>Open Fullscreen</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Resume Content Grid -->
+    <div class="resume-layout">
+      <!-- Left Column: Dossier -->
+      <div class="dossier-column">
+        <!-- Work Experience -->
+        <article class="dossier-card">
+          <div class="card-heading">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Work Experience</span>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-role-row">
+              <span class="exp-role">UI/UX Designer</span>
+              <span class="exp-period">Dec 2022 – Present</span>
+            </div>
+            <div class="exp-company">Delta Infosoft Pvt. Ltd. • Ahmedabad, India</div>
+            <ul class="bullet-list">
+              <li>Led end-to-end UX design for enterprise SaaS mobile apps, web platforms, and operational dashboards from wireframes to high-fidelity prototypes.</li>
+              <li>Simplified complex multi-tier business workflows into structured, intuitive interfaces.</li>
+              <li>Engineered scalable design system component libraries to maintain consistency across mobile and desktop products.</li>
+              <li>Partnered directly with engineering squads to ensure pixel-perfect, responsive execution.</li>
+              <li>Conducted stakeholder discovery sessions to align UX architecture with business KPI targets.</li>
+              <li>Applied Material Design 3 and Apple Human Interface Guidelines across mobile and responsive web platforms.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Featured Case Studies Links -->
+        <article class="dossier-card">
+          <div class="card-heading">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            <span>Featured Case Studies</span>
+          </div>
+
+          <a href="case-study-my-time.html" class="proj-block">
+            <div class="proj-header">
+              <span class="proj-name">My Time — Workforce SaaS Dashboard</span>
+              <span class="proj-arrow">Read Case Study →</span>
+            </div>
+            <p class="proj-desc">Redesigned task &amp; attendance workflows into guided multi-step actions; standardized enterprise UI components to improve visual hierarchy.</p>
+          </a>
+
+          <a href="case-study-attendance-app.html" class="proj-block">
+            <div class="proj-header">
+              <span class="proj-name">Attendance App — Mobile Workforce Tracking</span>
+              <span class="proj-arrow">Read Case Study →</span>
+            </div>
+            <p class="proj-desc">Designed mobile-first attendance tracking with 1-tap check-in, shift management, and offline-tolerant interaction flows.</p>
+          </a>
+
+          <a href="case-study-pick-and-pack.html" class="proj-block">
+            <div class="proj-header">
+              <span class="proj-name">Pick &amp; Pack — Operations App &amp; Web Dashboard</span>
+              <span class="proj-arrow">Read Case Study →</span>
+            </div>
+            <p class="proj-desc">End-to-end warehouse logistics UX transforming complex picking flows into step-based guided interactions that reduced errors.</p>
+          </a>
+        </article>
+
+        <!-- Skills & Competencies -->
+        <article class="dossier-card">
+          <div class="card-heading">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Skills &amp; Capabilities</span>
+          </div>
+
+          <div class="skills-cluster">
+            <div class="skill-cat-title">Product &amp; UX Design</div>
+            <div class="pill-wrap">
+              <span class="skill-pill featured">User Research</span>
+              <span class="skill-pill featured">Wireframing</span>
+              <span class="skill-pill featured">Interactive Prototyping</span>
+              <span class="skill-pill">Information Architecture</span>
+              <span class="skill-pill">Usability Testing</span>
+              <span class="skill-pill">User Journey Mapping</span>
+            </div>
+          </div>
+
+          <div class="skills-cluster">
+            <div class="skill-cat-title">Design Systems &amp; Platforms</div>
+            <div class="pill-wrap">
+              <span class="skill-pill featured">Figma &amp; FigJam</span>
+              <span class="skill-pill">Component Libraries</span>
+              <span class="skill-pill">Apple Human Interface Guidelines</span>
+              <span class="skill-pill">Material Design 3</span>
+              <span class="skill-pill">Responsive Design Systems</span>
+            </div>
+          </div>
+
+          <div class="skills-cluster">
+            <div class="skill-cat-title">Frontend Engineering Fluency</div>
+            <div class="pill-wrap">
+              <span class="skill-pill">HTML5</span>
+              <span class="skill-pill">CSS3 &amp; Flexbox/Grid</span>
+              <span class="skill-pill">JavaScript (ES6+)</span>
+              <span class="skill-pill">Next.js Awareness</span>
+              <span class="skill-pill">Git &amp; GitHub</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Education -->
+        <article class="dossier-card">
+          <div class="card-heading">
+            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <span>Education</span>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-role-row">
+              <span class="exp-role">Master of Computer Applications (MCA)</span>
+              <span class="exp-period">2021 – 2023</span>
+            </div>
+            <div class="exp-company">Parul University • Vadodara, Gujarat</div>
+          </div>
+
+          <div class="exp-item" style="margin-top: 10px;">
+            <div class="exp-role-row">
+              <span class="exp-role">Bachelor of Computer Science (BCS)</span>
+              <span class="exp-period">2018 – 2021</span>
+            </div>
+            <div class="exp-company">Kadi Sarva Vishvavidyalaya • Gandhinagar, Gujarat</div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Right Column: Live PDF Document Viewer -->
+      <div class="pdf-column">
+        <div class="pdf-viewer-frame">
+          <div class="viewer-header">
+            <div class="viewer-filename">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span>Jagruti_Gothwal_Resume.pdf</span>
+            </div>
+            <a href="resume.pdf" download="Jagruti_Gothwal_Resume.pdf" class="btn-primary" style="padding: 6px 14px; font-size: 13px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Download</span>
+            </a>
+          </div>
+          <object data="resume.pdf" type="application/pdf" class="pdf-embed-object">
+            <iframe src="resume.pdf" class="pdf-embed-object" title="Jagruti Gothwal Resume PDF">
+              <p style="padding: 30px; text-align: center; color: var(--color-secondary);">
+                Your browser does not support embedded PDF preview. 
+                <a href="resume.pdf" download="Jagruti_Gothwal_Resume.pdf" style="color: var(--color-orange); font-weight: 600;">Download the PDF here</a>.
+              </p>
+            </iframe>
+          </object>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
