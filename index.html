@@ -40,37 +40,49 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    html, body {
+    html {
+      box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
       width: 100%;
-      height: 100%;
+      min-height: 100vh;
       background-color: var(--bg-page);
       font-family: var(--font-inter);
       color: var(--color-ink);
-      overflow: hidden;
-      user-select: none;
-      -webkit-user-select: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+      user-select: auto;
+      -webkit-user-select: auto;
     }
 
-    /* Fixed full-window desktop viewport */
+    /* Page Viewport Container */
     .viewport-container {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      overflow: hidden;
+      align-items: flex-start;
+      padding: clamp(32px, 4.5vw, 64px) clamp(16px, 3.5vw, 48px);
     }
 
-    /* Fixed 1440x960 stage scaled with CSS min() */
+    /* Main Responsive Stage Container */
     .stage {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(28px, 3.5vw, 42px);
       position: relative;
-      width: 1440px;
-      height: 960px;
-      flex-shrink: 0;
-      transform-origin: center center;
-      transform: scale(min(calc(100vw / 1440), calc(100vh / 960)));
     }
 
     /* Hidden clock driver for single Web Animation clock */
@@ -83,18 +95,24 @@
       visibility: hidden;
     }
 
-    /* Intro Elements */
+    /* Hero Section */
+    .hero-section {
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(20px, 3.5vw, 42px);
+      width: 100%;
+    }
+
     .hero-avatar {
-      position: absolute;
-      top: 82px;
-      left: 136px;
-      width: 145px;
-      height: 145px;
+      width: clamp(105px, 11vw, 145px);
+      height: clamp(105px, 11vw, 145px);
       border-radius: var(--radius-avatar);
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border-hairline);
       background-color: var(--bg-card);
+      flex-shrink: 0;
+      position: relative;
     }
 
     .hero-avatar img {
@@ -104,16 +122,22 @@
       display: block;
     }
 
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
     .hero-headline {
-      position: absolute;
-      top: 92px;
-      left: 321px;
-      width: 900px;
-      font-size: 39.5px;
-      line-height: 46px;
+      font-size: clamp(25px, 3.1vw, 39px);
+      line-height: 1.18;
       font-weight: 520;
-      letter-spacing: -0.021em;
+      letter-spacing: -0.022em;
       color: var(--color-ink);
+      margin: 0;
+      max-width: 960px;
     }
 
     .hero-headline .muted {
@@ -121,24 +145,28 @@
     }
 
     .hero-bio {
-      position: absolute;
-      top: 203px;
-      left: 321px;
-      width: 790px;
-      font-size: 20.5px;
-      line-height: 31px;
+      font-size: clamp(15.5px, 1.35vw, 19.5px);
+      line-height: 1.5;
       font-weight: 400;
       color: var(--color-secondary);
       letter-spacing: -0.012em;
+      margin: 0;
+      max-width: 860px;
+    }
+
+    .hero-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
     }
 
     /* Voice Note Pill */
     .voice-note-pill {
-      position: absolute;
-      top: 287px;
-      left: 321px;
-      width: 495px;
-      height: 53px;
+      height: 52px;
+      width: clamp(280px, 38vw, 485px);
+      max-width: 100%;
       border-radius: var(--radius-pill);
       background: var(--bg-card);
       border: 1px solid var(--border-hairline);
@@ -147,6 +175,7 @@
       align-items: center;
       padding: 0 16px;
       gap: 12px;
+      position: relative;
     }
 
     .play-btn {
@@ -179,10 +208,12 @@
       gap: 2px;
       flex-grow: 1;
       height: 28px;
+      overflow: hidden;
     }
 
     .waveform-bar {
       width: 2px;
+      flex-shrink: 0;
       height: 10px;
       background-color: #D6D2CC;
       border-radius: 1px;
@@ -205,17 +236,8 @@
       flex-shrink: 0;
     }
 
-    /* Available Pill */
-    .hero-actions-row {
-      display: contents;
-    }
-
     .available-pill {
-      position: absolute;
-      top: 287px;
-      left: 841px;
-      width: 174px;
-      height: 53px;
+      height: 52px;
       border-radius: var(--radius-pill);
       background: var(--bg-card);
       border: 1px solid var(--border-hairline);
@@ -225,6 +247,8 @@
       padding: 0 18px;
       gap: 10px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+      white-space: nowrap;
     }
 
     .available-pill:hover {
@@ -233,8 +257,6 @@
     }
 
     #block-behance {
-      left: 1027px;
-      width: 136px;
       padding: 0 16px;
       gap: 8px;
     }
@@ -280,28 +302,56 @@
 
     /* Bento Grid Container */
     .bento-grid {
-      position: absolute;
-      top: 390px;
-      left: 76px;
-      width: 1288px;
-      height: 517px;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 17px;
+      gap: 16px;
     }
 
     .bento-row {
       display: flex;
-      gap: 17px;
+      gap: 16px;
       width: 100%;
     }
 
     .bento-row-1 {
-      height: 258px;
+      height: 260px;
     }
 
     .bento-row-2 {
-      height: 242px;
+      height: 245px;
+    }
+
+    /* Desktop column weights */
+    #card-experience {
+      flex: 3.6;
+      min-width: 0;
+      height: 100%;
+    }
+    #card-listening {
+      flex: 5.0;
+      min-width: 0;
+      height: 100%;
+    }
+    #card-reading {
+      flex: 3.6;
+      min-width: 0;
+      height: 100%;
+    }
+    #card-map {
+      flex: 3.6;
+      min-width: 0;
+      height: 100%;
+    }
+    #card-photo {
+      flex: 3.2;
+      min-width: 0;
+      height: 100%;
+    }
+    #card-how-i-work {
+      flex: 5.4;
+      min-width: 0;
+      height: 100%;
     }
 
     /* Base Card Styling */
@@ -350,13 +400,13 @@
     /* ---------------- CARD 1: EXPERIENCE ---------------- */
     .card-experience-inner {
       position: absolute;
-      top: 50px;
+      top: 48px;
       left: 0;
       right: 0;
       bottom: 0;
       overflow: hidden;
-      mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, transparent 4px, black 28px, black calc(100% - 24px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 4px, black 28px, black calc(100% - 24px), transparent 100%);
     }
 
     .timeline-stream {
@@ -399,7 +449,7 @@
     }
 
     .timeline-title {
-      font-size: 15.5px;
+      font-size: 15px;
       font-weight: 500;
       line-height: 1.25;
       color: var(--color-ink);
@@ -420,13 +470,13 @@
       inset: 0;
       display: flex;
       align-items: center;
-      padding: 44px 26px 20px 24px;
-      gap: 22px;
+      padding: 42px 22px 18px 22px;
+      gap: clamp(14px, 2.5vw, 22px);
     }
 
     .album-art-wrap {
-      width: 165px;
-      height: 173px;
+      width: clamp(100px, 12vw, 155px);
+      height: clamp(100px, 12vw, 155px);
       border-radius: 10px;
       overflow: hidden;
       flex-shrink: 0;
@@ -451,26 +501,30 @@
     }
 
     .track-title {
-      font-size: 18px;
+      font-size: clamp(16px, 1.8vw, 18.5px);
       font-weight: 500;
       color: var(--color-ink);
       letter-spacing: -0.015em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .track-artist {
-      font-size: 14.5px;
+      font-size: 14px;
       color: var(--color-muted);
       margin-top: 2px;
       font-weight: 420;
     }
 
     .progress-section {
-      margin-top: 18px;
-      width: 243px;
+      margin-top: 12px;
+      width: 100%;
+      max-width: 250px;
     }
 
     .progress-bar-bg {
-      width: 243px;
+      width: 100%;
       height: 3.5px;
       border-radius: 2px;
       background: rgba(0, 0, 0, 0.08);
@@ -500,8 +554,8 @@
     .player-controls-row {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-top: 14px;
+      gap: clamp(10px, 2vw, 16px);
+      margin-top: 10px;
     }
 
     .ctrl-btn {
@@ -549,25 +603,28 @@
     .card-reading-content {
       position: absolute;
       inset: 0;
-      padding: 58px 24px 24px 24px;
+      padding: 46px 18px 18px 22px;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .reading-text-wrap {
-      width: 180px;
+      width: auto;
+      max-width: 58%;
       z-index: 2;
     }
 
     .book-title {
-      font-size: 25.5px;
-      line-height: 35px;
+      font-size: clamp(21px, 2.4vw, 25.5px);
+      line-height: 1.25;
       font-weight: 520;
       letter-spacing: -0.02em;
       color: var(--color-ink);
     }
 
     .book-author {
-      font-size: 15px;
+      font-size: 14.5px;
       color: var(--color-muted);
       font-weight: 420;
       margin-top: 6px;
@@ -576,10 +633,10 @@
 
     .book-cover-bleed {
       position: absolute;
-      right: 4px;
+      right: 10px;
       bottom: 0px;
-      width: 172px;
-      height: 236px;
+      width: clamp(110px, 24vw, 160px);
+      height: clamp(150px, 32vw, 220px);
       transform-origin: bottom right;
       transform: rotate(5deg);
       mix-blend-mode: multiply;
@@ -597,10 +654,10 @@
     /* ---------------- CARD 4: MAP ---------------- */
     .map-frame {
       position: absolute;
-      top: 11px;
-      left: 11px;
-      right: 11px;
-      bottom: 11px;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
       border-radius: 9px;
       overflow: hidden;
       border: 1px solid var(--border-hairline);
@@ -619,7 +676,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 27px;
+      font-size: clamp(22px, 3vw, 27px);
       font-weight: 500;
       letter-spacing: -0.02em;
       color: #6C6863;
@@ -652,8 +709,8 @@
 
     .map-pill-label {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
+      bottom: 18px;
+      left: 18px;
       height: 27px;
       padding: 0 11px;
       border-radius: 9999px;
@@ -674,10 +731,10 @@
     /* ---------------- CARD 5: PHOTO ---------------- */
     .photo-frame {
       position: absolute;
-      top: 11px;
-      left: 11px;
-      right: 11px;
-      bottom: 11px;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
       border-radius: 9px;
       overflow: hidden;
       border: 1px solid var(--border-hairline);
@@ -692,8 +749,8 @@
 
     .photo-caption-pill {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
+      bottom: 18px;
+      left: 18px;
       height: 33px;
       padding: 0 13px;
       border-radius: 9999px;
@@ -738,25 +795,26 @@
       justify-content: space-between;
       align-items: center;
       z-index: 10;
+      gap: 8px;
     }
 
     .how-segment-ctrl {
       position: relative;
-      height: 40px;
+      height: 38px;
       background: var(--color-chips);
       border-radius: var(--radius-pill);
-      padding: 3px;
+      padding: 2.5px;
       display: flex;
       align-items: center;
-      width: 248px;
+      width: clamp(180px, 32vw, 244px);
     }
 
     .sliding-pill {
       position: absolute;
-      top: 3px;
-      bottom: 3px;
-      left: 3px;
-      width: calc((100% - 6px) / 4);
+      top: 2.5px;
+      bottom: 2.5px;
+      left: 2.5px;
+      width: calc((100% - 5px) / 4);
       border-radius: var(--radius-pill);
       background: var(--color-dark);
       z-index: 1;
@@ -796,10 +854,10 @@
 
     .how-content-stage {
       position: absolute;
-      top: 74px;
-      left: 24px;
-      right: 24px;
-      bottom: 20px;
+      top: 64px;
+      left: 20px;
+      right: 20px;
+      bottom: 16px;
       overflow: hidden;
     }
 
@@ -809,37 +867,41 @@
       display: flex;
       flex-direction: column;
       opacity: 0;
-      transform: translateY(14px);
+      visibility: hidden;
+      transform: translateY(12px);
       pointer-events: none;
-      transition: opacity 0.42s var(--ease-step), transform 0.42s var(--ease-step);
+      transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
     }
 
     .how-step-pane.active {
       opacity: 1;
+      visibility: visible;
       transform: translateY(0);
       pointer-events: auto;
     }
 
     .how-step-pane.outgoing {
       opacity: 0;
-      transform: translateY(-14px);
+      visibility: hidden;
+      transform: translateY(-12px);
       pointer-events: none;
     }
 
     .how-step-title {
-      font-size: 29px;
+      font-size: clamp(21px, 2.6vw, 28px);
       font-weight: 520;
       letter-spacing: -0.021em;
       color: var(--color-ink);
       line-height: 1.15;
+      margin: 0 0 8px 0;
     }
 
     .how-step-body {
-      font-size: 15px;
-      line-height: 23px;
+      font-size: clamp(13.5px, 1.35vw, 15px);
+      line-height: 1.45;
       font-weight: 400;
       color: var(--color-secondary);
-      margin-top: 10px;
+      margin: 0;
       max-width: 480px;
       letter-spacing: -0.01em;
     }
@@ -851,153 +913,215 @@
       will-change: transform, opacity;
     }
 
-    /* Mobile / Narrow Screens (<=820px) */
-    @media (max-width: 820px) {
-      html, body {
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: auto;
-        user-select: auto;
-        -webkit-user-select: auto;
-      }
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS (Tablet & Mobile)
+       ========================================================================== */
 
-      .viewport-container {
-        position: relative;
-        inset: auto;
-        width: 100%;
-        height: auto;
-        min-height: 100vh;
-        display: block;
-        padding: 40px 20px 80px;
-      }
-
+    /* Tablet Breakpoint (681px - 1060px): 2-Column Bento Grid */
+    @media (max-width: 1060px) and (min-width: 681px) {
       .stage {
-        width: 100%;
-        height: auto;
-        transform: none !important;
-        position: relative;
-        display: flex;
-        flex-direction: column;
+        gap: 28px;
+      }
+
+      .hero-section {
         gap: 24px;
       }
 
-      .hero-avatar {
-        position: relative;
-        top: auto;
-        left: auto;
-        margin-bottom: 8px;
-      }
-
-      .hero-headline {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        font-size: 30px;
-        line-height: 36px;
-      }
-
-      .hero-bio {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        font-size: 18px;
-        line-height: 27px;
-      }
-
-      .voice-note-pill {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        max-width: 495px;
-      }
-
-      .hero-actions-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        align-items: center;
-        width: 100%;
-      }
-
-      .available-pill {
-        position: relative;
-        top: auto;
-        left: auto !important;
-        width: fit-content;
-      }
-
-      #block-behance {
-        left: auto !important;
-        top: auto !important;
-        position: relative !important;
-        width: fit-content !important;
-      }
-
       .bento-grid {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        height: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 16px;
       }
 
       .bento-row {
-        flex-direction: column;
-        height: auto !important;
-        gap: 16px;
+        display: contents;
       }
 
       .bento-card {
         width: 100% !important;
-        min-height: 250px;
+        height: auto !important;
+        min-height: 245px;
       }
 
-      .how-header {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        padding: 14px 14px 0;
+      #card-experience {
+        height: 250px !important;
       }
 
-      .how-content-stage {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        padding: 16px 20px 24px;
-        min-height: 170px;
+      #card-listening {
+        min-height: 250px !important;
       }
 
-      .how-step-pane {
-        position: relative;
+      #card-reading {
+        height: 250px !important;
+      }
+
+      .reading-text-wrap {
+        max-width: 52% !important;
+      }
+
+      #card-map {
+        height: 245px !important;
+      }
+
+      #card-photo {
+        height: 245px !important;
+      }
+
+      #card-how-i-work {
+        min-height: 245px !important;
+      }
+
+      .how-segment-ctrl {
+        width: 175px !important;
+        height: 33px !important;
+        padding: 2px !important;
+      }
+
+      .how-segment-ctrl .step-btn {
+        font-size: 11.5px !important;
+      }
+    }
+
+    /* Mobile Breakpoint (<= 680px): Single Column Fluid Flow */
+    @media (max-width: 680px) {
+      .viewport-container {
+        padding: 24px 16px 64px;
+      }
+
+      .stage {
+        gap: 24px;
+      }
+
+      .hero-section {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .hero-avatar {
+        width: 96px;
+        height: 96px;
+        border-radius: 20px;
+      }
+
+      .hero-headline {
+        font-size: 25px;
+        line-height: 31px;
+      }
+
+      .hero-bio {
+        font-size: 15.5px;
+        line-height: 23px;
+      }
+
+      .voice-note-pill {
+        width: 100%;
+      }
+
+      .hero-actions-row {
+        gap: 10px;
+      }
+
+      .bento-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .bento-row {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 16px !important;
+      }
+
+      .bento-card {
+        width: 100% !important;
+        height: auto !important;
+      }
+
+      #card-experience {
+        height: 240px !important;
+      }
+
+      #card-listening {
+        height: auto !important;
+        min-height: 195px !important;
       }
 
       .card-listening-content {
-        flex-direction: column;
-        align-items: flex-start;
-        height: auto;
-        position: relative;
+        padding: 44px 16px 18px 16px !important;
+        gap: 14px !important;
       }
 
-      .card-reading-content {
-        position: relative;
-        height: 260px;
+      .album-art-wrap {
+        width: 105px !important;
+        height: 105px !important;
       }
 
-      .card-experience-inner {
-        position: relative;
-        top: auto;
-        height: 200px;
+      #card-reading {
+        height: 235px !important;
       }
 
-      .map-frame, .photo-frame {
-        position: absolute;
+      .reading-text-wrap {
+        max-width: 55% !important;
+      }
+
+      #card-map {
+        height: 215px !important;
+      }
+
+      #card-photo {
+        height: 235px !important;
+      }
+
+      #card-how-i-work {
+        height: auto !important;
+        min-height: 220px !important;
+      }
+
+      .how-header {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        padding: 14px 14px 0 14px !important;
+      }
+
+      .how-content-stage {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        padding: 14px 16px 20px 16px !important;
+        min-height: 130px !important;
+      }
+
+      .how-step-pane {
+        position: relative !important;
+      }
+
+      .how-step-pane:not(.active) {
+        display: none !important;
+      }
+
+      .how-segment-ctrl {
+        width: 170px !important;
+        height: 33px !important;
+        padding: 2px !important;
+      }
+
+      .how-segment-ctrl .step-btn {
+        font-size: 11px !important;
+      }
+
+      .how-step-title {
+        font-size: 21px !important;
+      }
+
+      .how-step-body {
+        font-size: 14px !important;
+        line-height: 20px !important;
       }
     }
 
@@ -1022,58 +1146,62 @@
 
   <div class="viewport-container">
     <main class="stage" id="stage">
-      <!-- 1. Hero Avatar (136, 82, 145x145) -->
-      <div class="hero-avatar motion-block" id="block-avatar">
-        <img src="avatar.png" alt="Jagruti Gothwal — Product Designer" width="145" height="145" onerror="this.onerror=null; this.src='https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/60582a62-dbab-4bc1-9169-07db0fcb51b1.jpg';">
-      </div>
+      <!-- Hero Section -->
+      <header class="hero-section">
+        <!-- Hero Avatar -->
+        <div class="hero-avatar motion-block" id="block-avatar">
+          <img src="avatar.png" alt="Jagruti Gothwal — Product Designer" width="145" height="145" onerror="this.onerror=null; this.src='https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/60582a62-dbab-4bc1-9169-07db0fcb51b1.jpg';">
+        </div>
 
-      <!-- 2. Hero Headline (321, 92, 900w) -->
-      <h1 class="hero-headline motion-block" id="block-headline">
-        Hi I’m Jagruti — I’m a Product Designer at<br>Delta Infosoft.<span class="muted"> Mobile &amp; Web Apps.</span>
-      </h1>
+        <div class="hero-content">
+          <!-- Hero Headline -->
+          <h1 class="hero-headline motion-block" id="block-headline">
+            Hi I’m Jagruti — I’m a Product Designer at Delta Infosoft. <span class="muted">Mobile &amp; Web Apps.</span>
+          </h1>
 
-      <!-- 3. Hero Bio (321, 203, 790w) -->
-      <p class="hero-bio motion-block" id="block-bio">
-        Product designer with 3+ years of experience designing SaaS mobile and web apps,<br>specializing in simplifying complex workflows into intuitive, scalable experiences.
-      </p>
+          <!-- Hero Bio -->
+          <p class="hero-bio motion-block" id="block-bio">
+            Product designer with 3+ years of experience designing SaaS mobile and web apps, specializing in simplifying complex workflows into intuitive, scalable experiences.
+          </p>
 
-      <!-- 4. Voice Note Pill (321, 287, 495x53) -->
-      <div class="voice-note-pill motion-block" id="block-voice-note" role="region" aria-label="Voice Note">
-        <button class="play-btn" id="voice-play-toggle" aria-label="Toggle voice note playback">
-          <svg id="voice-play-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
-            <polygon points="6 4 19 12 6 20 6 4"></polygon>
-          </svg>
-          <svg id="voice-pause-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="display:none">
-            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
-            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
-          </svg>
-        </button>
-        <div class="waveform-container" id="voice-waveform" aria-hidden="true"></div>
-        <div class="voice-timer" id="voice-timer" aria-live="off">0:00</div>
-      </div>
+          <!-- Actions Row (Voice Note + Available + Behance) -->
+          <div class="hero-actions-row">
+            <div class="voice-note-pill motion-block" id="block-voice-note" role="region" aria-label="Voice Note">
+              <button class="play-btn" id="voice-play-toggle" aria-label="Toggle voice note playback">
+                <svg id="voice-play-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                  <polygon points="6 4 19 12 6 20 6 4"></polygon>
+                </svg>
+                <svg id="voice-pause-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="display:none">
+                  <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                  <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                </svg>
+              </button>
+              <div class="waveform-container" id="voice-waveform" aria-hidden="true"></div>
+              <div class="voice-timer" id="voice-timer" aria-live="off">0:00</div>
+            </div>
 
-      <!-- 5. Actions Row (Available Pill + Behance Pill) -->
-      <div class="hero-actions-row">
-        <a href="mailto:gothwaljagruti@gmail.com" class="available-pill motion-block" id="block-available" style="text-decoration: none;" title="Email Jagruti (gothwaljagruti@gmail.com)">
-          <div class="dot-wrapper">
-            <div class="dot-halo" id="available-halo"></div>
-            <div class="dot-core"></div>
+            <a href="mailto:gothwaljagruti@gmail.com" class="available-pill motion-block" id="block-available" style="text-decoration: none;" title="Email Jagruti (gothwaljagruti@gmail.com)">
+              <div class="dot-wrapper">
+                <div class="dot-halo" id="available-halo"></div>
+                <div class="dot-core"></div>
+              </div>
+              <span class="available-text">Available for Work</span>
+            </a>
+
+            <a href="https://behance.net/jagrutigothwal" target="_blank" rel="noopener noreferrer" class="available-pill motion-block" id="block-behance" style="text-decoration: none;" title="View Behance Portfolio">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="color: var(--color-ink); flex-shrink: 0;"><path d="M7.7 10.7c.9 0 1.6-.3 2.1-.8.5-.6.7-1.3.7-2.1 0-.9-.3-1.6-.9-2.1-.6-.5-1.5-.8-2.6-.8H1.5v11.8h5.7c1.3 0 2.3-.3 3-.9.7-.6 1.1-1.5 1.1-2.6 0-1-.3-1.8-.9-2.4-.6-.7-1.5-1-2.7-1.1zm-3.6-3.8h2.8c.6 0 1 .1 1.3.4.3.3.4.7.4 1.2 0 .5-.1.9-.4 1.1-.3.3-.8.4-1.3.4H4.1V6.9zm3.1 7.8H4.1v-2.7h3.1c.6 0 1.1.1 1.4.4.3.3.5.7.5 1.2 0 .5-.2.8-.5 1.1-.3-.1-.8 0-1.5 0zm10.7-3.9c-.9 0-1.6.3-2.1.8-.5.5-.8 1.3-.9 2.2h5.8c0-.9-.3-1.7-.8-2.2-.5-.5-1.2-.8-2-.8zm-.1-2.1c1.8 0 3.2.5 4.1 1.6.9 1.1 1.4 2.6 1.4 4.5v.7h-8.7c0 1 .4 1.8 1 2.3.6.6 1.4.9 2.3.9 1.4 0 2.5-.5 3.3-1.5l1.6 1.3c-.6.8-1.4 1.5-2.3 1.9-.9.4-2 .6-3.2.6-2 0-3.6-.6-4.7-1.8-1.1-1.2-1.7-2.8-1.7-4.8 0-1.9.6-3.5 1.7-4.7 1.2-1.2 2.8-1.8 4.8-1.8zm-2.7-3.2h5.3v1.5h-5.3V5.5z"/></svg>
+              <span class="available-text" style="font-size: 13.5px; font-weight: 500;">Behance</span>
+            </a>
           </div>
-          <span class="available-text">Available for Work</span>
-        </a>
+        </div>
+      </header>
 
-        <a href="https://behance.net/jagrutigothwal" target="_blank" rel="noopener noreferrer" class="available-pill motion-block" id="block-behance" style="text-decoration: none;" title="View Behance Portfolio">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="color: var(--color-ink); flex-shrink: 0;"><path d="M7.7 10.7c.9 0 1.6-.3 2.1-.8.5-.6.7-1.3.7-2.1 0-.9-.3-1.6-.9-2.1-.6-.5-1.5-.8-2.6-.8H1.5v11.8h5.7c1.3 0 2.3-.3 3-.9.7-.6 1.1-1.5 1.1-2.6 0-1-.3-1.8-.9-2.4-.6-.7-1.5-1-2.7-1.1zm-3.6-3.8h2.8c.6 0 1 .1 1.3.4.3.3.4.7.4 1.2 0 .5-.1.9-.4 1.1-.3.3-.8.4-1.3.4H4.1V6.9zm3.1 7.8H4.1v-2.7h3.1c.6 0 1.1.1 1.4.4.3.3.5.7.5 1.2 0 .5-.2.8-.5 1.1-.3-.1-.8 0-1.5 0zm10.7-3.9c-.9 0-1.6.3-2.1.8-.5.5-.8 1.3-.9 2.2h5.8c0-.9-.3-1.7-.8-2.2-.5-.5-1.2-.8-2-.8zm-.1-2.1c1.8 0 3.2.5 4.1 1.6.9 1.1 1.4 2.6 1.4 4.5v.7h-8.7c0 1 .4 1.8 1 2.3.6.6 1.4.9 2.3.9 1.4 0 2.5-.5 3.3-1.5l1.6 1.3c-.6.8-1.4 1.5-2.3 1.9-.9.4-2 .6-3.2.6-2 0-3.6-.6-4.7-1.8-1.1-1.2-1.7-2.8-1.7-4.8 0-1.9.6-3.5 1.7-4.7 1.2-1.2 2.8-1.8 4.8-1.8zm-2.7-3.2h5.3v1.5h-5.3V5.5z"/></svg>
-          <span class="available-text" style="font-size: 13.5px; font-weight: 500;">Behance</span>
-        </a>
-      </div>
-
-      <!-- 6. Bento Grid (76, 390, 1288x517) -->
+      <!-- Bento Grid -->
       <div class="bento-grid" id="bento-grid">
-        <!-- Row 1: top 390, height 258 -->
+        <!-- Row 1 -->
         <div class="bento-row bento-row-1">
-          <!-- Card 1: Experience (370px) -->
-          <article class="bento-card motion-block" id="card-experience" style="width: 370px;">
+          <!-- Card 1: Experience -->
+          <article class="bento-card motion-block" id="card-experience">
             <div class="card-chip">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg>
               <span>Experience</span>
@@ -1150,8 +1278,8 @@
             </div>
           </article>
 
-          <!-- Card 2: What I'm listening (513px) -->
-          <article class="bento-card motion-block" id="card-listening" style="width: 513px;">
+          <!-- Card 2: What I'm listening -->
+          <article class="bento-card motion-block" id="card-listening">
             <div class="card-chip">
               <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
               <span>What I’m listening</span>
@@ -1206,8 +1334,8 @@
             </div>
           </article>
 
-          <!-- Card 3: What I'm reading (371px) -->
-          <article class="bento-card motion-block" id="card-reading" style="width: 371px;">
+          <!-- Card 3: What I'm reading -->
+          <article class="bento-card motion-block" id="card-reading">
             <div class="card-chip">
               <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
               <span>What I’m reading</span>
@@ -1224,10 +1352,10 @@
           </article>
         </div>
 
-        <!-- Row 2: top 665, height 242 -->
+        <!-- Row 2 -->
         <div class="bento-row bento-row-2">
-          <!-- Card 4: Map (370px) -->
-          <article class="bento-card motion-block" id="card-map" style="width: 370px;">
+          <!-- Card 4: Map -->
+          <article class="bento-card motion-block" id="card-map">
             <div class="card-chip">
               <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
               <span>Map</span>
@@ -1245,8 +1373,8 @@
             </div>
           </article>
 
-          <!-- Card 5: Photo (330px) -->
-          <article class="bento-card motion-block" id="card-photo" style="width: 330px;">
+          <!-- Card 5: Photo -->
+          <article class="bento-card motion-block" id="card-photo">
             <div class="photo-frame">
               <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/9f4e5ca0-844d-4c0a-8665-5cc5024e3281.jpg" alt="Coaching football with kids">
             </div>
@@ -1258,8 +1386,8 @@
             </div>
           </article>
 
-          <!-- Card 6: How I work (554px) -->
-          <article class="bento-card motion-block" id="card-how-i-work" style="width: 554px;">
+          <!-- Card 6: How I work -->
+          <article class="bento-card motion-block" id="card-how-i-work">
             <div class="how-header">
               <div class="card-chip" style="position: static;">
                 <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
@@ -1303,7 +1431,7 @@
        1. INITIALIZE WAVEFORM BARS
        ========================================================================== */
     const waveformContainer = document.getElementById('voice-waveform');
-    const NUM_BARS = 78;
+    const NUM_BARS = 64;
     const waveformBars = [];
 
     (function initWaveform() {
@@ -1317,10 +1445,10 @@
         const bar = document.createElement('div');
         bar.className = 'waveform-bar';
 
-        // Base height with two distinct bursts near bar 25 and bar 55
+        // Base height with two distinct bursts near bar 20 and bar 46
         let h = 5 + pseudoRandom() * 9;
-        const d1 = Math.abs(i - 25);
-        const d2 = Math.abs(i - 55);
+        const d1 = Math.abs(i - 20);
+        const d2 = Math.abs(i - 46);
         if (d1 < 7) {
           h += (7 - d1) * 2.6 + pseudoRandom() * 3.5;
         } else if (d2 < 7) {
