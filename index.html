@@ -854,21 +854,24 @@
 
     .photo-caption-pill {
       position: absolute;
-      bottom: 18px;
-      left: 18px;
-      height: 33px;
-      padding: 0 13px;
+      bottom: 16px;
+      left: 16px;
+      min-height: 33px;
+      height: auto;
+      padding: 6px 13px;
       border-radius: 9999px;
       background: #FFFFFF;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 7px;
-      font-size: 13px;
+      font-size: 12.5px;
+      line-height: 1.25;
       font-weight: 500;
       color: var(--color-ink);
       z-index: 10;
       letter-spacing: -0.01em;
+      max-width: calc(100% - 32px);
     }
 
     .football-icon {
@@ -1514,16 +1517,20 @@
             </div>
           </article>
 
-          <!-- Card 5: Photo -->
+          <!-- Card 5: Photo (Comic & Satirical Short Videos) -->
           <article class="bento-card motion-block" id="card-photo">
             <div class="photo-frame">
-              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/9f4e5ca0-844d-4c0a-8665-5cc5024e3281.jpg" alt="Coaching football with kids">
+              <img src="./comic-video-creator.jpg" alt="Creating comic and satirical short videos on smartphone" style="object-position: center 35%;">
+            </div>
+            <div class="card-chip" style="position: absolute; top: 18px; left: 18px; z-index: 10; background: rgba(0,0,0,0.65); color: #FFFFFF; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.18);">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #FF3B30; display: inline-block;"></span>
+              <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.05em; color: #FFFFFF;">REC</span>
             </div>
             <div class="photo-caption-pill">
-              <span class="football-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9"/><path d="M3 12a9 9 0 0 1 9-9"/><path d="M12 21a9 9 0 0 1-9-9"/></svg>
+              <span class="video-pill-icon" style="width: 15px; height: 15px; border-radius: 50%; background: #FF3B30; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" width="8" height="8" fill="#FFFFFF"><polygon points="6 4 19 12 6 20 6 4"></polygon></svg>
               </span>
-              <span>I love teaching football</span>
+              <span>Comic &amp; satirical short videos</span>
             </div>
           </article>
 
