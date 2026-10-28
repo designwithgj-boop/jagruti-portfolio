@@ -997,7 +997,7 @@
 
       <!-- 2. Hero Headline (321, 92, 900w) -->
       <h1 class="hero-headline motion-block" id="block-headline">
-        Hi I’m Jagruti — I’m a Product Designer at Fieldnote.<span class="muted"> Previously at Orbit.</span>
+        Hi I’m Jagruti — I’m a Product Designer at<br>Fieldnote.<span class="muted"> Previously at Orbit.</span>
       </h1>
 
       <!-- 3. Hero Bio (321, 203, 790w) -->
@@ -1326,10 +1326,14 @@
     let voiceIsPlaying = false;
     let voiceManualTime = 0;
     let voiceLastClock = 0;
+    let currentVoiceElapsed = 0;
 
     voicePlayToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      voiceManualOverride = true;
+      if (!voiceManualOverride) {
+        voiceManualOverride = true;
+        voiceManualTime = currentVoiceElapsed;
+      }
       voiceIsPlaying = !voiceIsPlaying;
       if (voiceIsPlaying && voiceManualTime >= VOICE_TOTAL_DUR) {
         voiceManualTime = 0;
@@ -1494,7 +1498,7 @@
       }
 
       /* E. Voice Note Playback */
-      let currentVoiceElapsed = 0;
+      currentVoiceElapsed = 0;
       if (!voiceManualOverride) {
         // Default clock-bound auto playback: starts at 1.3s and plays for 32s
         if (clockTime >= VOICE_AUTO_START && clockTime < (VOICE_AUTO_START + VOICE_TOTAL_DUR)) {
