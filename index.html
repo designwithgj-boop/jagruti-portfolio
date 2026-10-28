@@ -178,14 +178,13 @@
       background-color: var(--color-orange);
     }
 
-    /* Hidden clock driver for single Web Animation clock */
+    /* Single Web Animation clock driver */
     #clock-driver {
       position: absolute;
       width: 1px;
       height: 1px;
-      opacity: 0;
+      opacity: 0.001;
       pointer-events: none;
-      visibility: hidden;
     }
 
     /* Hero Section */
@@ -1012,8 +1011,8 @@
 
     /* Entrance Animation Staging */
     .motion-block {
-      opacity: 0;
-      transform: translateY(14px);
+      opacity: 1;
+      transform: translateY(0);
       will-change: transform, opacity;
     }
 
@@ -1730,44 +1729,20 @@
     let entranceComplete = false;
 
     function tick() {
-      // Single Clock: currentTime in seconds
-      const clockTime = (clockAnim.currentTime || 0) / 1000;
+      // Single Clock: currentTime in seconds with performance.now fallback
+      const clockTime = (clockAnim && clockAnim.currentTime != null && clockAnim.currentTime > 0)
+        ? (clockAnim.currentTime / 1000)
+        : (performance.now() / 1000);
       const delta = Math.max(0, clockTime - (voiceLastClock || clockTime));
       voiceLastClock = clockTime;
 
-      /* A. Entrance Stagger Animation */
-      if (!prefersReducedMotion && !entranceComplete) {
-        let allSettled = true;
-        const STAGGER = 0.08;
-        const ENTRANCE_DUR = 0.7;
-
-        for (let i = 0; i < motionBlocks.length; i++) {
-          const block = motionBlocks[i];
-          const delay = i * STAGGER;
-          if (clockTime < delay) {
-            block.style.opacity = '0';
-            block.style.transform = 'translateY(14px)';
-            allSettled = false;
-          } else if (clockTime >= delay + ENTRANCE_DUR) {
-            block.style.opacity = '1';
-            block.style.transform = 'translateY(0)';
-          } else {
-            const u = (clockTime - delay) / ENTRANCE_DUR;
-            // Cubic ease out (1 - (1-u)^3)
-            const eased = 1 - Math.pow(1 - u, 3);
-            block.style.opacity = eased.toFixed(3);
-            block.style.transform = `translateY(${((1 - eased) * 14).toFixed(2)}px)`;
-            allSettled = false;
-          }
-        }
-        if (allSettled && clockTime > motionBlocks.length * STAGGER + ENTRANCE_DUR) {
-          entranceComplete = true;
-        }
-      } else if (prefersReducedMotion) {
+      /* A. Entrance - Ensure all blocks are visible */
+      if (!entranceComplete) {
         motionBlocks.forEach(b => {
           b.style.opacity = '1';
           b.style.transform = 'translateY(0)';
         });
+        entranceComplete = true;
       }
 
       /* B. Available Dot Halo Pulse (every 1.8s, scale 1 to 2.4, fade out) */
