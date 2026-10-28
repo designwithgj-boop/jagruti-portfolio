@@ -374,7 +374,19 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
-      padding: 20px;
+      padding: 0;
+    }
+
+    .work-visual-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s var(--ease-cubic);
+    }
+
+    .work-card:hover .work-visual-img {
+      transform: scale(1.04);
     }
 
     /* Abstract Stylized Mockup Visuals */
@@ -725,40 +737,7 @@
         </div>
 
         <div class="work-visual-stage" aria-hidden="true">
-          <div class="mockup-dashboard">
-            <div class="mockup-header-bar">
-              <div class="mockup-dot"></div>
-              <div class="mockup-dot"></div>
-              <div class="mockup-dot"></div>
-              <div style="font-size: 10px; font-weight: 600; color: #777; margin-left: 8px;">My Time • Shift Matrix</div>
-            </div>
-            <div class="mockup-grid-cells">
-              <div class="mockup-cell">
-                <div class="cell-line-sm"></div>
-                <div class="cell-line-lg"></div>
-                <div class="cell-line-sm cell-accent"></div>
-              </div>
-              <div class="mockup-cell">
-                <div class="cell-line-sm"></div>
-                <div class="cell-line-lg"></div>
-                <div class="cell-line-sm"></div>
-              </div>
-              <div class="mockup-cell">
-                <div class="cell-line-sm"></div>
-                <div class="cell-line-lg"></div>
-                <div class="cell-line-sm"></div>
-              </div>
-              <div class="mockup-cell" style="grid-column: span 2;">
-                <div class="cell-line-sm"></div>
-                <div class="cell-line-lg" style="width: 95%;"></div>
-                <div class="cell-line-sm"></div>
-              </div>
-              <div class="mockup-cell">
-                <div class="cell-line-sm"></div>
-                <div class="cell-line-lg cell-accent"></div>
-              </div>
-            </div>
-          </div>
+          <img src="./case-study-my-time-preview.jpg" alt="My Time Workforce Management SaaS Dashboard" class="work-visual-img">
         </div>
       </a>
 
@@ -795,16 +774,7 @@
         </div>
 
         <div class="work-visual-stage" aria-hidden="true">
-          <div class="mockup-phone">
-            <div class="phone-notch"></div>
-            <div style="font-size: 9px; font-weight: 700; color: #1E1C1A;">Morning Shift</div>
-            <div style="font-size: 8px; color: #777;">09:00 AM • Ahmedabad Hub</div>
-            <div style="height: 18px; background: #EEF8F1; border-radius: 6px; display: flex; align-items: center; padding: 0 6px; font-size: 8px; color: #1E874B; font-weight: 600; gap: 4px;">
-              <span style="width: 4px; height: 4px; border-radius: 50%; background: #1E874B;"></span>
-              GPS Verified
-            </div>
-            <div class="phone-checkin-btn">Swipe to Check In</div>
-          </div>
+          <img src="./case-study-attendance-preview.jpg" alt="Attendance Mobile App with GPS Geofencing" class="work-visual-img">
         </div>
       </a>
 
@@ -841,23 +811,7 @@
         </div>
 
         <div class="work-visual-stage" aria-hidden="true">
-          <div class="mockup-dual">
-            <div class="dual-box">
-              <div style="font-size: 10px; font-weight: 600;">Pick Sequence</div>
-              <div class="dual-step">
-                <span class="step-badge done">✓</span>
-                <span>Bin A-14 • Scanned</span>
-              </div>
-              <div class="dual-step" style="border-color: var(--color-orange);">
-                <span class="step-badge" style="background: var(--color-orange); color: #FFF;">2</span>
-                <span>Bin B-02 • Active</span>
-              </div>
-              <div class="dual-step" style="opacity: 0.6;">
-                <span class="step-badge">3</span>
-                <span>Bin C-18 • Queued</span>
-              </div>
-            </div>
-          </div>
+          <img src="./case-study-pick-pack-preview.jpg" alt="Pick and Pack Warehouse Logistics Operations" class="work-visual-img">
         </div>
       </a>
     </main>
