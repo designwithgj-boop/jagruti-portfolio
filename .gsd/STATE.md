@@ -1,9 +1,9 @@
 # STATE: Jagruti Profile Page
 
 ## Current Position
-- **Phase**: 4
+- **Phase**: 5
 - **Plan**: 01
-- **Status**: Completed & Verified
+- **Status**: Completed & Deployed
 
 ## Accumulated Decisions & Patterns
 - Single-file `index.html` structure with embedded styles and vanilla script.
@@ -13,6 +13,11 @@
 - Doubled timeline list drifting at 9px/s with CSS gradient fade mask.
 - Multiply blend mode applied to book cover for seamless drop-out of white background on off-white card.
 
+## Deployments & Remotes
+- **GitHub Repository**: [https://github.com/designwithgj-boop/jagruti-portfolio](https://github.com/designwithgj-boop/jagruti-portfolio) (Account: `designwithgj-boop`)
+- **Vercel Production Deployment**: [https://jagruti-portfolio-smoky.vercel.app](https://jagruti-portfolio-smoky.vercel.app) (Account: `designwithgj-boop` / `design-with-gj`)
+
 ## Verification
-- Status: **passed** (Score 9/9 must-haves verified)
+- Status: **passed** (All must-haves verified + live production 200 OK verified via browser screenshot)
 - Empirical verification report: `.gsd/phases/4/01-VERIFICATION.md`
+
