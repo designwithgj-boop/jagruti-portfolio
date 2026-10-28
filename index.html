@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jagruti — Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #EEECE8;
+      --bg-card: #F5F3EF;
+      --border-hairline: rgba(0, 0, 0, 0.07);
+      --color-ink: #1E1C1A;
+      --color-secondary: #77736E;
+      --color-muted: #A7A39D;
+      --color-chips: #E9E6E1;
+      --color-orange: #EE6A1F;
+      --color-green: #3BC45E;
+      --color-dark: #2A2624;
+      
+      --radius-avatar: 11px;
+      --radius-card: 14px;
+      --radius-chip: 9999px;
+      --radius-pill: 9999px;
+      
+      --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --ease-cubic: cubic-bezier(0.22, 1, 0.36, 1);
+      --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.02), 0 4px 16px rgba(0, 0, 0, 0.03);
+      --shadow-card-hover: 0 4px 8px rgba(0, 0, 0, 0.03), 0 12px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-page);
+      font-family: var(--font-inter);
+      color: var(--color-ink);
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Fixed full-window desktop viewport */
+    .viewport-container {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Fixed 1440x960 stage scaled with CSS min() */
+    .stage {
+      position: relative;
+      width: 1440px;
+      height: 960px;
+      flex-shrink: 0;
+      transform-origin: center center;
+      transform: scale(min(calc(100vw / 1440), calc(100vh / 960)));
+    }
+
+    /* Hidden clock driver for single Web Animation clock */
+    #clock-driver {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    /* Intro Elements */
+    .hero-avatar {
+      position: absolute;
+      top: 82px;
+      left: 136px;
+      width: 145px;
+      height: 145px;
+      border-radius: var(--radius-avatar);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-card);
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-headline {
+      position: absolute;
+      top: 92px;
+      left: 321px;
+      width: 900px;
+      font-size: 39.5px;
+      line-height: 46px;
+      font-weight: 520;
+      letter-spacing: -0.021em;
+      color: var(--color-ink);
+    }
+
+    .hero-headline .muted {
+      color: var(--color-muted);
+    }
+
+    .hero-bio {
+      position: absolute;
+      top: 203px;
+      left: 321px;
+      width: 790px;
+      font-size: 20.5px;
+      line-height: 31px;
+      font-weight: 400;
+      color: var(--color-secondary);
+      letter-spacing: -0.012em;
+    }
+
+    /* Voice Note Pill */
+    .voice-note-pill {
+      position: absolute;
+      top: 287px;
+      left: 321px;
+      width: 495px;
+      height: 53px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+    }
+
+    .play-btn {
+      width: 29px;
+      height: 29px;
+      border-radius: 50%;
+      background: var(--color-orange);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      flex-shrink: 0;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      outline: none;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.06);
+    }
+
+    .play-btn:active {
+      transform: scale(0.96);
+    }
+
+    .waveform-container {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-grow: 1;
+      height: 28px;
+    }
+
+    .waveform-bar {
+      width: 2px;
+      height: 10px;
+      background-color: #D6D2CC;
+      border-radius: 1px;
+      transform-origin: bottom center;
+      transition: background-color 0.1s linear, transform 0.08s ease-out;
+    }
+
+    .waveform-bar.active {
+      background-color: var(--color-ink);
+    }
+
+    .voice-timer {
+      font-size: 13px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--color-secondary);
+      min-width: 32px;
+      text-align: right;
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+
+    /* Available Pill */
+    .available-pill {
+      position: absolute;
+      top: 287px;
+      left: 841px;
+      width: 174px;
+      height: 53px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 10px;
+    }
+
+    .dot-wrapper {
+      position: relative;
+      width: 10px;
+      height: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dot-core {
+      width: 7.5px;
+      height: 7.5px;
+      border-radius: 50%;
+      background-color: var(--color-green);
+      position: relative;
+      z-index: 2;
+    }
+
+    .dot-halo {
+      position: absolute;
+      width: 7.5px;
+      height: 7.5px;
+      border-radius: 50%;
+      background-color: var(--color-green);
+      opacity: 0.6;
+      transform-origin: center center;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .available-text {
+      font-size: 14px;
+      font-weight: 480;
+      letter-spacing: -0.015em;
+      color: var(--color-ink);
+      white-space: nowrap;
+    }
+
+    /* Bento Grid Container */
+    .bento-grid {
+      position: absolute;
+      top: 390px;
+      left: 76px;
+      width: 1288px;
+      height: 517px;
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+
+    .bento-row {
+      display: flex;
+      gap: 17px;
+      width: 100%;
+    }
+
+    .bento-row-1 {
+      height: 258px;
+    }
+
+    .bento-row-2 {
+      height: 242px;
+    }
+
+    /* Base Card Styling */
+    .bento-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: transform 0.25s var(--ease-cubic), box-shadow 0.25s var(--ease-cubic);
+    }
+
+    .bento-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    /* Top-left chip */
+    .card-chip {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      height: 25px;
+      padding: 0 10px;
+      border-radius: var(--radius-chip);
+      background: var(--color-chips);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12.5px;
+      font-weight: 480;
+      letter-spacing: -0.01em;
+      color: var(--color-ink);
+      z-index: 10;
+    }
+
+    .card-chip svg {
+      width: 12px;
+      height: 12px;
+      stroke-width: 1.8;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* Entrance Animation Staging */
+    .motion-block {
+      opacity: 0;
+      transform: translateY(14px);
+      will-change: transform, opacity;
+    }
+
+    /* Mobile / Narrow Screens (<=820px) */
+    @media (max-width: 820px) {
+      html, body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
+        user-select: auto;
+        -webkit-user-select: auto;
+      }
+
+      .viewport-container {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        display: block;
+        padding: 40px 20px 80px;
+      }
+
+      .stage {
+        width: 100%;
+        height: auto;
+        transform: none !important;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .hero-avatar {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 8px;
+      }
+
+      .hero-headline {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        font-size: 30px;
+        line-height: 36px;
+      }
+
+      .hero-bio {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        font-size: 18px;
+        line-height: 27px;
+      }
+
+      .voice-note-pill {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        max-width: 495px;
+      }
+
+      .available-pill {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: fit-content;
+      }
+
+      .bento-grid {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        gap: 16px;
+      }
+
+      .bento-row {
+        flex-direction: column;
+        height: auto !important;
+        gap: 16px;
+      }
+
+      .bento-card {
+        width: 100% !important;
+        min-height: 250px;
+      }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .motion-block {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hidden element for single Web Animation clock -->
+  <div id="clock-driver"></div>
+
+  <div class="viewport-container">
+    <main class="stage" id="stage">
+      <!-- 1. Hero Avatar (136, 82, 145x145) -->
+      <div class="hero-avatar motion-block" id="block-avatar">
+        <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/60582a62-dbab-4bc1-9169-07db0fcb51b1.jpg" alt="Jagruti — Product Designer" width="145" height="145">
+      </div>
+
+      <!-- 2. Hero Headline (321, 92, 900w) -->
+      <h1 class="hero-headline motion-block" id="block-headline">
+        Hi I’m Jagruti — I’m a Product Designer at Fieldnote.<span class="muted"> Previously at Orbit.</span>
+      </h1>
+
+      <!-- 3. Hero Bio (321, 203, 790w) -->
+      <p class="hero-bio motion-block" id="block-bio">
+        I am a seasoned product designer with 5 years of experience specializing in<br>crafting creative tools solutions and empowering creatives.
+      </p>
+
+      <!-- 4. Voice Note Pill (321, 287, 495x53) -->
+      <div class="voice-note-pill motion-block" id="block-voice-note" role="region" aria-label="Voice Note">
+        <button class="play-btn" id="voice-play-toggle" aria-label="Toggle voice note playback">
+          <svg id="voice-play-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <polygon points="6 4 19 12 6 20 6 4"></polygon>
+          </svg>
+          <svg id="voice-pause-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="display:none">
+            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+          </svg>
+        </button>
+        <div class="waveform-container" id="voice-waveform" aria-hidden="true"></div>
+        <div class="voice-timer" id="voice-timer" aria-live="off">0:00</div>
+      </div>
+
+      <!-- 5. Available for Work Pill (841, 287, 174x53) -->
+      <div class="available-pill motion-block" id="block-available">
+        <div class="dot-wrapper">
+          <div class="dot-halo" id="available-halo"></div>
+          <div class="dot-core"></div>
+        </div>
+        <span class="available-text">Available for Work</span>
+      </div>
+
+      <!-- 6. Bento Grid (76, 390, 1288x517) -->
+      <div class="bento-grid" id="bento-grid">
+        <!-- Row 1: top 390, height 258 -->
+        <div class="bento-row bento-row-1">
+          <!-- Card 1: Experience (370px) -->
+          <article class="bento-card motion-block" id="card-experience" style="width: 370px;">
+            <div class="card-chip">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Experience</span>
+            </div>
+            <!-- Content will be added in Phase 2 -->
+          </article>
+
+          <!-- Card 2: What I'm listening (513px) -->
+          <article class="bento-card motion-block" id="card-listening" style="width: 513px;">
+            <div class="card-chip">
+              <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              <span>What I’m listening</span>
+            </div>
+            <!-- Content will be added in Phase 2 -->
+          </article>
+
+          <!-- Card 3: What I'm reading (371px) -->
+          <article class="bento-card motion-block" id="card-reading" style="width: 371px;">
+            <div class="card-chip">
+              <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <span>What I’m reading</span>
+            </div>
+            <!-- Content will be added in Phase 2 -->
+          </article>
+        </div>
+
+        <!-- Row 2: top 665, height 242 -->
+        <div class="bento-row bento-row-2">
+          <!-- Card 4: Map (370px) -->
+          <article class="bento-card motion-block" id="card-map" style="width: 370px;">
+            <div class="card-chip">
+              <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+              <span>Map</span>
+            </div>
+            <!-- Content will be added in Phase 2 -->
+          </article>
+
+          <!-- Card 5: Photo (330px) -->
+          <article class="bento-card motion-block" id="card-photo" style="width: 330px;">
+            <!-- Content will be added in Phase 2 -->
+          </article>
+
+          <!-- Card 6: How I work (554px) -->
+          <article class="bento-card motion-block" id="card-how-i-work" style="width: 554px;">
+            <div class="card-chip">
+              <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              <span>How I work</span>
+            </div>
+            <!-- Content will be added in Phase 2 -->
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Build 78 waveform bars with seeded heights and two loud bursts
+    (function initWaveform() {
+      const container = document.getElementById('voice-waveform');
+      const numBars = 78;
+      
+      // Seeded random pseudo-generator
+      let seed = 42;
+      function random() {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      }
+
+      for (let i = 0; i < numBars; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'waveform-bar';
+        
+        // Two loud bursts around index 23-27 and index 54-58
+        let height = 4 + random() * 10;
+        const d1 = Math.abs(i - 25);
+        const d2 = Math.abs(i - 55);
+        if (d1 < 6) {
+          height += (6 - d1) * 2.8 + random() * 4;
+        } else if (d2 < 6) {
+          height += (6 - d2) * 2.6 + random() * 4;
+        }
+        height = Math.min(26, Math.max(5, height));
+        bar.style.height = `${height.toFixed(1)}px`;
+        bar.dataset.baseHeight = height.toFixed(1);
+        container.appendChild(bar);
+      }
+    })();
+  </script>
+</body>
+</html>
