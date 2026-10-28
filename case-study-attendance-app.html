@@ -634,6 +634,169 @@
       transform: translateX(2px);
     }
 
+    /* ---------------- MOBILE APP TAB BAR (BASE) ---------------- */
+    .mobile-tab-bar {
+      display: none;
+    }
+
+    .mobile-top-status-pill {
+      display: none;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(59, 196, 94, 0.5);
+      }
+      70% {
+        box-shadow: 0 0 0 6px rgba(59, 196, 94, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(59, 196, 94, 0);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site-container {
+        padding: 16px 14px calc(115px + env(safe-area-inset-bottom, 24px)) !important;
+        gap: 20px;
+      }
+
+      .global-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        padding: 0 0 6px !important;
+        position: sticky !important;
+        top: 8px !important;
+      }
+
+      .nav-pill-group {
+        display: none !important;
+      }
+
+      .mobile-top-status-pill {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: #FFFFFF;
+        border: 1px solid var(--border-hairline);
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 560;
+        color: var(--color-ink);
+        text-decoration: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        transition: transform 0.2s var(--ease-cubic);
+      }
+
+      .mobile-top-status-pill:active {
+        transform: scale(0.95);
+      }
+
+      .status-pulse-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--color-green);
+        box-shadow: 0 0 0 2px rgba(59, 196, 94, 0.2);
+        animation: pulse-ring 2s infinite;
+      }
+
+      /* Mobile App Bottom Navigation Bar */
+      .mobile-tab-bar {
+        display: flex !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        justify-content: center;
+        padding: 0 14px calc(12px + env(safe-area-inset-bottom, 8px));
+        pointer-events: none;
+      }
+
+      .mobile-tab-pill-bar {
+        pointer-events: auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        width: 100%;
+        max-width: 390px;
+        background: rgba(245, 243, 239, 0.92);
+        backdrop-filter: blur(28px) saturate(190%);
+        -webkit-backdrop-filter: blur(28px) saturate(190%);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 9999px;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
+        padding: 5px 6px;
+        gap: 4px;
+      }
+
+      .mobile-tab-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        height: 48px;
+        border-radius: 9999px;
+        text-decoration: none;
+        color: var(--color-secondary);
+        transition: all 0.2s var(--ease-cubic);
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .mobile-tab-link:active {
+        transform: scale(0.92);
+      }
+
+      .mobile-tab-link.active {
+        background: var(--color-ink);
+        color: #FFFFFF;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+      }
+
+      .tab-icon-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+
+      .tab-icon-wrap svg {
+        transition: transform 0.2s var(--ease-cubic);
+      }
+
+      .mobile-tab-link.active .tab-icon-wrap svg {
+        stroke: #FFFFFF;
+        transform: scale(1.05);
+      }
+
+      .tab-label {
+        font-size: 10.5px;
+        font-weight: 560;
+        letter-spacing: -0.01em;
+        line-height: 1;
+      }
+
+      .tab-dot-badge {
+        position: absolute;
+        top: -1px;
+        right: -3px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(245, 243, 239, 0.9);
+      }
+
+      .mobile-tab-link.active .tab-dot-badge {
+        border-color: var(--color-ink);
+      }
+    }
+
     @media (max-width: 600px) {
       .case-nav-footer {
         flex-direction: column;
@@ -663,6 +826,11 @@
         </a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
+
+      <a href="contact.html" class="mobile-top-status-pill" title="Available for new opportunities">
+        <span class="status-pulse-dot"></span>
+        <span>Available</span>
+      </a>
     </header>
 
     <!-- Back Navigation Bar -->
@@ -907,6 +1075,54 @@
       </a>
     </footer>
   </div>
+
+  <!-- Mobile App Floating Bottom Navigation Bar -->
+  <nav class="mobile-tab-bar" aria-label="Mobile Navigation">
+    <div class="mobile-tab-pill-bar">
+      <a href="index.html" class="mobile-tab-link">
+        <div class="tab-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <span class="tab-label">Overview</span>
+      </a>
+
+      <a href="works.html" class="mobile-tab-link active" aria-current="page">
+        <div class="tab-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <span class="tab-label">Works</span>
+      </a>
+
+      <a href="resume.html" class="mobile-tab-link">
+        <div class="tab-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          <span class="tab-dot-badge" style="background: var(--color-orange, #FF9500);"></span>
+        </div>
+        <span class="tab-label">Resume</span>
+      </a>
+
+      <a href="contact.html" class="mobile-tab-link">
+        <div class="tab-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+          <span class="tab-dot-badge" style="background: var(--color-green, #3BC45E);"></span>
+        </div>
+        <span class="tab-label">Contact</span>
+      </a>
+    </div>
+  </nav>
 
   <script>
     // Live clock simulator for the mobile preview
